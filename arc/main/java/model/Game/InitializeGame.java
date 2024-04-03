@@ -21,13 +21,13 @@ public class InitializeGame {
     }
 
 
-        public static void loadItems() {
+        public static void loadItems( ) {
             // Read item file
             // Create item directory
             // Add items to item directory
         }
 
-        public static void loadEvents() {
+        public static void loadEvents( ) {
             // Read event file
             // Create event directory
             // Add events to event directory    
