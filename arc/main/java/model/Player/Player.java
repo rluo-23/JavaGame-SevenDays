@@ -31,17 +31,39 @@ public class Player {
         items = gameRecord.getItems();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public BagList getItems() {
+        return items;
+    }
+
+    public GameRecord getGameRecord() {
+        return gameRecord;
+    }
+
     public void viewInfo(){
-        System.out.println("Name: " + name);
-        System.out.println("Date: " + date);
+        System.out.print("hi " + name + ", ");
+        System.out.println("This is day " + date + " !");
         System.out.println("Money: " + money);
-        System.out.println("Hunt Skill: " + skill.getHuntSkill());
-        System.out.println("Collect Skill: " + skill.getCollectSkill());
-        System.out.println("Capacity: " + skill.getCapacity());
-        System.out.println("Items: ");
+        System.out.println("Hunt: lv" + skill.getHuntSkill());
+        System.out.println("Collect: lv" + skill.getCollectSkill());
+        System.out.println("Bag Capacity: " + skill.getCapacity());
+        System.out.println("");
+        System.out.println("---Items in Bag---");
         items.viewItems();
     }
-    
-
-
 }

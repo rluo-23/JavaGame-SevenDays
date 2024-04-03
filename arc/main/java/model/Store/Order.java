@@ -12,4 +12,6 @@ public class Order {
         this.quantity = quantity;
         this.price = 0; //需要算法
     }
+
+    
 }

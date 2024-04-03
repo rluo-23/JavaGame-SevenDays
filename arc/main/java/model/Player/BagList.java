@@ -24,4 +24,8 @@ public class BagList {
         bagList.add(new BagItems(item, quantity));
         quantity++;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }
