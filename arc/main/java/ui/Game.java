@@ -11,19 +11,16 @@ import arc.main.java.model.ItemManagement.ItemDirectory;
 
 public class Game {
     public static void main(String[] args) {
+
+        // 测试数据
         ItemDirectory itemDirectory = new ItemDirectory();
         EventDirectory eventDirectory = new EventDirectory();
         
         // 加载项目数据
         loadData.loadItems(itemDirectory);
 
-        // 打印 ItemDirectory 中的项目信息
-        loadData.printItemDirectory(itemDirectory);
-
         // 加载事件数据
         loadData.loadEvents(eventDirectory, itemDirectory);
-        // 打印 EventDirectory 中的事件信息
-        loadData.printEventDirectory(eventDirectory);
 
     }
 }

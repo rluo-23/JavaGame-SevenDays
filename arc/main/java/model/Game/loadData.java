@@ -18,6 +18,7 @@ public class loadData {
             // 跳过第一行（标题行）
             br.readLine();
             while ((line = br.readLine()) != null) {
+                System.out.println("Line: " + line); // 打印每一行数据
                 String[] data = line.split(",");
                 if (data.length == 3) {
                     int type = Integer.parseInt(data[0]);
@@ -33,12 +34,6 @@ public class loadData {
         }
     }
 
-    public static void printItemDirectory(ItemDirectory itemDirectory) {
-        System.out.println("Items in ItemDirectory:");
-        for (Item item : itemDirectory.getItems()) {
-            System.out.println("Type: " + item.getType() + ", Name: " + item.getName() + ", Price: " + item.getPrice());
-        }
-    }
     
 
     public static void loadEvents(EventDirectory eventDirectory, ItemDirectory itemDirectory) {
@@ -48,6 +43,7 @@ public class loadData {
             // 跳过第一行（标题行）
             br.readLine();
             while ((line = br.readLine()) != null) {
+                System.out.println("Line: " + line); // 打印每一行数据
                 String[] data = line.split(",");
                 if (data.length == 4) {
                     String itemName = data[0];
@@ -80,12 +76,4 @@ public class loadData {
     }
 
 
-    public static void printEventDirectory(EventDirectory eventDirectory) {
-        System.out.println("Events in EventDirectory:");
-        for (Event event : eventDirectory.getEvents()) {
-            System.out.println("Item: " + event.getItem().getName() +
-                               ", Quantity: " + event.getQuantity() +
-                               ", Difficulty: " + event.getDifficulty() +
-                               ", Information: " + event.getInformation());
-        }}
 }
