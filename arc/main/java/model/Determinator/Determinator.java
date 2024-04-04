@@ -1,15 +1,18 @@
 package arc.main.java.model.Determinator;
 
+import java.util.Random;
 
 public class Determinator {
-    int dices;
+    Boolean result;
+    Random random = new Random();
 
     public Determinator() {
-        this.dices = 2;
+        result = false;
     }
 
-    public Determinator(int dices) {
-        this.dices = dices;
+    public Boolean getResult(int diff, int add) {
+        int randomInt = random.nextInt(10)+2; 
+        return (randomInt + add) >= diff;
     }
 
 }

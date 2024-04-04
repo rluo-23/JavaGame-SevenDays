@@ -10,4 +10,17 @@ public class Item {
         this.name = name;
         this.price = price;
     }
+
+    public int getType(){
+        return type;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getPrice(){
+        return price;
+    }
+
 }

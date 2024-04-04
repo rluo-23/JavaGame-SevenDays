@@ -14,12 +14,16 @@ import arc.main.java.model.Activity.Activity;
 public class Game {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
         System.out.println("Welcome to the game!");
         System.out.println("What is your name?");
         String name = scanner.nextLine();
         Player player = new Player(name);
 
-        
+        //Generate items
+
+        //Generate events
 
     }
 }
