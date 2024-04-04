@@ -1,6 +1,10 @@
 package arc.main.java.model.EventManagement;
 
+import java.util.Random;
+
 import arc.main.java.model.ItemManagement.Item;
+import arc.main.java.model.ItemManagement.Water;
+
 
 public class Event {
     Item item;
@@ -20,11 +24,6 @@ public class Event {
         this.quantity = 1;
         this.difficulty = 0;
         this.information = "Deep in the heart of the forest, you discover a hidden pool shimmering with magical energy. It is the magical water that you have been searching for! You gain 1 water.";
-    }
-
-    public Event(Item item, String information){
-        this.item = item;
-        this.information = information;
     }
 
     public Item getItem() {

@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import arc.main.java.model.Player.Player;
-import arc.main.java.model.Player.BagItems;
+import arc.main.java.model.Player.BagItem;
 import arc.main.java.model.Player.BagList;
 import arc.main.java.model.Player.Skill;
 import arc.main.java.model.Activity.Activity;

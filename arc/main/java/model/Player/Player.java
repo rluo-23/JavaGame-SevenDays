@@ -67,6 +67,10 @@ public class Player {
         return water;
     }
 
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     public void viewInfo(){
         System.out.print("hi " + name + ", ");
         System.out.println("This is day " + date + " !");

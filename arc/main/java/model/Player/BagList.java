@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import arc.main.java.model.ItemManagement.Item;
 
 public class BagList {
-    ArrayList<BagItems> bagList = new ArrayList<BagItems>();
+    ArrayList<BagItem> bagList = new ArrayList<BagItem>();
     int quantity = 0;
     
     public BagList(){
-        this.bagList = new ArrayList<BagItems>();
+        this.bagList = new ArrayList<BagItem>();
         this.quantity = 0;
     }
 
@@ -21,14 +21,14 @@ public class BagList {
     }
 
     public void addItem(Item item, int quantity){
-        bagList.add(new BagItems(item, quantity));
+        bagList.add(new BagItem(item, quantity));
         quantity++;
     }
 
-    public Item searchItem(String name){
+    public BagItem searchItem(String name){
         for(int i = 0; i < bagList.size(); i++){
             if(bagList.get(i).getItem().getName().equals(name)){
-                return bagList.get(i).getItem();
+                return bagList.get(i);
             }
         }
         return null;

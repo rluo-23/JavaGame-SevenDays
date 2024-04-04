@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import arc.main.java.model.ItemManagement.ItemDirectory;
+import arc.main.java.model.ItemManagement.Item;
 import arc.main.java.model.ItemManagement.Water;
 import arc.main.java.model.Player.Player;
 
@@ -14,9 +15,8 @@ public class Store {
     Player player;
     Random random;
 
-    public Store(Player player, ItemDirectory itemDirectory) {
+    public Store(Player player, ItemDirectory itemDirectory){
         orders = new ArrayList<Order>();
-        waterPrice = 1; //需要算法
         this.player = player;
         random = new Random();
     }
@@ -30,15 +30,15 @@ public class Store {
     public void refreshOrder(){
         orders.clear();
         for(int i = 0; i < 6; i++){
-            Item item = itemDirectory.pickRandomItem()
+            Item item = itemDirectory.pickRandomItem();
             int quantity = random.nextInt(2) + 1;
             newOrder(item, quantity);
         }
     }
 
     public Boolean buyWater(){
-        if(player.getMoney() >= waterPrice){
-            player.setMoney(player.getMoney() - waterPrice);
+        if(player.getMoney() >= water.getPrice()){
+            player.setMoney(player.getMoney() - water.getPrice());
             player.getWater().setQuantity(player.getWater().getQuantity() + 1);
             return true;
         }
@@ -47,7 +47,7 @@ public class Store {
     }
 
     public Boolean submitOrder(Order order){
-        if(player.getItems().searchItem(order.getItem().getName()).getQuantity（) >= order.getQuantity(){
+        if(player.getItems().searchItem(order.getItem().getName()).getQuantity() >= order.getQuantity()){
             player.setMoney(player.getMoney() + order.getTotalPrice());
             player.getItems().searchItem(order.getItem().getName()).setQuantity(player.getItems().searchItem(order.getItem().getName()).getQuantity() - order.getQuantity());
             return true;

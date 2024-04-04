@@ -12,7 +12,7 @@ public class EventDirectory {
     }
 
     public Event newEvent(Item item, int quantity, int difficulty, String information){
-        Event event = new Event(item, quantity, information);
+        Event event = new Event(item, information);
         events.add(event);
         return event;
     }
