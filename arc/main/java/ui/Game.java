@@ -20,7 +20,14 @@ public class Game {
         System.out.println("Welcome to the game!");
         System.out.println("What is your name?");
         String name = scanner.nextLine();
-        Player player = new Player(name);
+        Player player = new Player(name); 
+
+        // test csv input
+        /* ItemDirectory itemDirectory = new ItemDirectory();
+        EventDirectory eventDirectory = new EventDirectory();
+
+        loadData.loadItems(itemDirectory);
+        loadData.loadEvents(eventDirectory, itemDirectory); */
 
         
 
