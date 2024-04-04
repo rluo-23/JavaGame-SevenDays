@@ -25,7 +25,20 @@ public class BagList {
         quantity++;
     }
 
+    public Item searchItem(String name){
+        for(int i = 0; i < bagList.size(); i++){
+            if(bagList.get(i).getItem().getName().equals(name)){
+                return bagList.get(i).getItem();
+            }
+        }
+        return null;
+    }
+
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

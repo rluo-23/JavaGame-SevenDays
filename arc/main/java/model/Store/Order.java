@@ -10,7 +10,29 @@ public class Order {
     public Order(Item item, int quantity){
         this.item = item;
         this.quantity = quantity;
-        this.price = 0; //需要算法
+        this.price = item.getPrice();
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getTotalPrice(){
+        return price * quantity;
+    }
+
+    public void printOrder(){
+        System.out.println("New Order!");
+        System.out.println("Elf ask for " + quantity + " " + item.getName() + "s");
+        System.out.println("Reward: " + getTotalPrice());
     }
 
     

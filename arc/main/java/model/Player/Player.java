@@ -1,5 +1,7 @@
 package arc.main.java.model.Player;
 
+import arc.main.java.model.ItemManagement.Water;
+
 public class Player {
     String name;
     int date;
@@ -7,6 +9,7 @@ public class Player {
     Skill skill;
     BagList items;
     GameRecord gameRecord;
+    Water water;
 
     public Player(String name){
         this.name = name;
@@ -15,6 +18,7 @@ public class Player {
         this.skill = new Skill();
         this.items = new BagList();
         this.gameRecord = new GameRecord();
+        this.water = new Water();
     }
 
     public void saveGame(){
@@ -29,6 +33,10 @@ public class Player {
         money = gameRecord.getMoney();
         skill = gameRecord.getSkill();
         items = gameRecord.getItems();
+    }
+
+    public Boolean checkAlive(){
+        return water.getQuantity() > 0;
     }
 
     public String getName() {
@@ -53,6 +61,10 @@ public class Player {
 
     public GameRecord getGameRecord() {
         return gameRecord;
+    }
+
+    public Water getWater() {
+        return water;
     }
 
     public void viewInfo(){

@@ -19,6 +19,13 @@ public class ItemDirectory {
         items.add(item);
     }
 
+    public Item pickRandomItem(){
+        if(items.size() == 0){
+            return null;
+        }
+        int random = (int) (Math.random() * items.size());
+        return items.get(random);
+    }
 
     public Item getItem(String name){
         for(Item item : items){

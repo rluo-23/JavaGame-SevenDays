@@ -1,17 +1,59 @@
 package arc.main.java.model.Store;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import arc.main.java.model.ItemManagement.ItemDirectory;
+import arc.main.java.model.ItemManagement.Water;
 import arc.main.java.model.Player.Player;
 
 public class Store {
+    ItemDirectory itemDirectory;
     ArrayList<Order> orders;
-    int waterPrice;
+    Water water;
     Player player;
+    Random random;
 
-    public Store(Player player) {
+    public Store(Player player, ItemDirectory itemDirectory) {
         orders = new ArrayList<Order>();
         waterPrice = 1; //需要算法
         this.player = player;
+        random = new Random();
     }
+
+    public Order newOrder(Item item, int quantity){
+        Order order = new Order(item, quantity);
+        orders.add(order);
+        return order;
+    }
+
+    public void refreshOrder(){
+        orders.clear();
+        for(int i = 0; i < 6; i++){
+            Item item = itemDirectory.pickRandomItem()
+            int quantity = random.nextInt(2) + 1;
+            newOrder(item, quantity);
+        }
+    }
+
+    public Boolean buyWater(){
+        if(player.getMoney() >= waterPrice){
+            player.setMoney(player.getMoney() - waterPrice);
+            player.getWater().setQuantity(player.getWater().getQuantity() + 1);
+            return true;
+        }
+        System.out.println("Not enough money to buy water.");
+        return false;
+    }
+
+    public Boolean submitOrder(Order order){
+        if(player.getItems().searchItem(order.getItem().getName()).getQuantity（) >= order.getQuantity(){
+            player.setMoney(player.getMoney() + order.getTotalPrice());
+            player.getItems().searchItem(order.getItem().getName()).setQuantity(player.getItems().searchItem(order.getItem().getName()).getQuantity() - order.getQuantity());
+            return true;
+        }
+        System.out.println("Not enough " + order.getItem().getName() + " to submit order.");
+        return false;
+    }
+
 }
