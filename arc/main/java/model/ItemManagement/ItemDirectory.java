@@ -9,6 +9,26 @@ public class ItemDirectory {
         items = new ArrayList<Item>();
     }
 
+    public Item newItem(int type, String name, int price){
+        Item item = new Item(type, name, price);
+        items.add(item);
+        return item;
+    }
+
+    public void add(Item item){
+        items.add(item);
+    }
+
+
+    public Item getItem(String name){
+        for(Item item : items){
+            if(item.getName().equals(name)){
+                return item;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Item> getItems() {
         return items;
     }

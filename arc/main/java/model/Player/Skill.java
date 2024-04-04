@@ -6,9 +6,33 @@ public class Skill {
     int capacity;
 
     public Skill(){
-        huntSkill = 0;
-        collectSkill = 0;
-        capacity = 0;
+        huntSkill = 1;
+        collectSkill = 1;
+        capacity = 1;
+    }
+
+    public int getHuntSkill() {
+        return huntSkill;
+    }
+
+    public void addHuntSkill() {
+        this.huntSkill++;
+    }
+
+    public int getCollectSkill() {
+        return collectSkill;
+    }
+
+    public void addCollectSkill() {
+        this.collectSkill++;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void addCapacity() {
+        this.capacity++;
     }
 
 }

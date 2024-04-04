@@ -6,6 +6,7 @@ public class Player {
     int money;
     Skill skill;
     BagList items;
+    GameRecord gameRecord;
 
     public Player(String name){
         this.name = name;
@@ -13,6 +14,56 @@ public class Player {
         this.money = 0;
         this.skill = new Skill();
         this.items = new BagList();
+        this.gameRecord = new GameRecord();
     }
 
+    public void saveGame(){
+        gameRecord.setDate(date);
+        gameRecord.setMoney(money);
+        gameRecord.setSkill(skill);
+        gameRecord.setItems(items);
+    }
+
+    public void loadGame(){
+        date = gameRecord.getDate();
+        money = gameRecord.getMoney();
+        skill = gameRecord.getSkill();
+        items = gameRecord.getItems();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public BagList getItems() {
+        return items;
+    }
+
+    public GameRecord getGameRecord() {
+        return gameRecord;
+    }
+
+    public void viewInfo(){
+        System.out.print("hi " + name + ", ");
+        System.out.println("This is day " + date + " !");
+        System.out.println("Money: " + money);
+        System.out.println("Hunt: lv" + skill.getHuntSkill());
+        System.out.println("Collect: lv" + skill.getCollectSkill());
+        System.out.println("Bag Capacity: " + skill.getCapacity());
+        System.out.println("");
+        System.out.println("---Items in Bag---");
+        items.viewItems();
+    }
 }
