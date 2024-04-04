@@ -56,20 +56,4 @@ public class Event {
 
 
 
-    public Item getItem(){
-        return item;
-    }
-
-    public int getQuantity(){
-        return quantity;
-    }
-
-    public int getDifficulty(){
-        return difficulty;
-    }
-
-    public String getInformation(){
-        return information;
-    }
-
 }

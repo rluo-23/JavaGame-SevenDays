@@ -37,7 +37,7 @@ public class loadData {
     
 
     public static void loadEvents(EventDirectory eventDirectory, ItemDirectory itemDirectory) {
-        String filePath = "arc/main/resources/data/event.csv"; // 文件路径硬编码
+        String filePath = "arc/main/resources/data/event.csv"; 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             // 跳过第一行（标题行）
@@ -47,7 +47,7 @@ public class loadData {
                 String[] data = line.split(",");
                 if (data.length == 4) {
                     String itemName = data[0];
-                    String information = data[3];
+                    String information = data[1];
 
                     // 通过物品名称在物品目录中查找对应的物品对象
                     Item item = findItemByName(itemName, itemDirectory);
