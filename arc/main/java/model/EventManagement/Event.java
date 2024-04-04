@@ -16,6 +16,11 @@ public class Event {
         this.information = information;
     }
 
+    public Event(Item item, String information){
+        this.item = item;
+        this.information = information;
+    }
+
     public Item getItem() {
         return item;
     }

@@ -47,14 +47,12 @@ public class loadData {
                 String[] data = line.split(",");
                 if (data.length == 4) {
                     String itemName = data[0];
-                    int quantity = Integer.parseInt(data[1]);
-                    int difficulty = Integer.parseInt(data[2]);
                     String information = data[3];
 
                     // 通过物品名称在物品目录中查找对应的物品对象
                     Item item = findItemByName(itemName, itemDirectory);
                     if (item != null) {
-                        Event event = new Event(item, quantity, difficulty, information);
+                        Event event = new Event(item, information);
                         eventDirectory.addEvent(event);
                     } else {
                         System.out.println("Item not found: " + itemName);

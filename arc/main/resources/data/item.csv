@@ -1,6 +1,11 @@
-type,Name,Price
-1,Magic Water,100
-0,Meat1,8
-0,Meat2,6
-1,Plant1,4
-1,Plant3,2
+type,name,price
+2,Magic Water,100
+2,Crystal Shard,50
+1,Berries,16
+1,Wood Logs,4
+1,Magic Mushrooms,6
+1,Herbs,10
+0,Animal Pelts,20
+0,Fox Tail,5
+0,Owl Feathers,9
+0,Bear Claw,15
