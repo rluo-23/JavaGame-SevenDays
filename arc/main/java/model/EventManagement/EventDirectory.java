@@ -24,4 +24,16 @@ public class EventDirectory {
         int random = (int) (Math.random() * events.size());
         return events.get(random);
     }
+
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
+    }
 }

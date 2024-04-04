@@ -19,9 +19,6 @@ public class ItemDirectory {
         items.add(item);
     }
 
-    public ArrayList<Item> getItems(){
-        return items;
-    }
 
     public Item getItem(String name){
         for(Item item : items){
@@ -30,5 +27,17 @@ public class ItemDirectory {
             }
         }
         return null;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
+
+    public void addItem(Item item) {
+        items.add(item);
     }
 }
