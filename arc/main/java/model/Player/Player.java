@@ -39,6 +39,36 @@ public class Player {
         return water.getQuantity() > 0;
     }
 
+    public Boolean addHuntSkill(){
+        int need = 50+skill.getHuntSkill() * 50;
+        if(money >= need){
+            skill.addHuntSkill();
+            money -= need;
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean addCollectSkill(){
+        int need = 50+skill.getCollectSkill() * 50;
+        if(money >= need){
+            skill.addCollectSkill();
+            money -= need;
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean addCapacity(){
+        int need = 50+skill.getCapacity() * 50;
+        if(money >= need){
+            skill.addCapacity();
+            money -= need;
+            return true;
+        }
+        return false;
+    }
+    
     public String getName() {
         return name;
     }

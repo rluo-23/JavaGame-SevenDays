@@ -20,10 +20,5 @@ public class Activity {
     public void setEvent(Event event){
         currentEvent = event;
     }
-
-    
-
-
-
-    
+   
 }
