@@ -2,6 +2,8 @@ package arc.main.java.model.ItemManagement;
 
 import java.util.ArrayList;
 
+import arc.main.java.model.Player.BagItem;
+
 public class ItemDirectory {
     ArrayList<Item> items;
 
@@ -36,6 +38,15 @@ public class ItemDirectory {
         return null;
     }
 
+    public Item searchItem(String name){
+        for(int i = 0; i < items.size(); i++){
+            if(items.get(i).getName().equals(name)){
+                return items.get(i);
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Item> getItems() {
         return items;
     }
@@ -46,5 +57,13 @@ public class ItemDirectory {
 
     public void addItem(Item item) {
         items.add(item);
+    }
+
+    public void printItems(){
+        for(Item item : items){
+            System.out.println("Type: " + item.getType());
+            System.out.println("Name: " + item.getName());
+            System.out.println("Price: " + item.getPrice());
+        }
     }
 }

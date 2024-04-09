@@ -44,8 +44,10 @@ public class Player {
         if(money >= need){
             skill.addHuntSkill();
             money -= need;
+            System.out.println("Hunt skill increased to level " + skill.getHuntSkill());
             return true;
         }
+        System.out.println("Not enough money to upgrade hunt skill.");
         return false;
     }
 
@@ -54,8 +56,10 @@ public class Player {
         if(money >= need){
             skill.addCollectSkill();
             money -= need;
+            System.out.println("Collect skill increased to level " + skill.getCollectSkill());
             return true;
         }
+        System.out.println("Not enough money to upgrade collect skill.");
         return false;
     }
 
@@ -64,8 +68,10 @@ public class Player {
         if(money >= need){
             skill.addCapacity();
             money -= need;
+            System.out.println("Bag capacity increased to " + skill.getCapacity());
             return true;
         }
+        System.out.println("Not enough money to upgrade bag capacity.");
         return false;
     }
     
@@ -75,6 +81,10 @@ public class Player {
 
     public int getDate() {
         return date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
     }
 
     public int getMoney() {
@@ -103,7 +113,7 @@ public class Player {
 
     public void viewInfo(){
         System.out.print("hi " + name + ", ");
-        System.out.println("This is day " + date + " !");
+        System.out.println("This is day " + date/3+1 + " !");
         System.out.println("Money: " + money);
         System.out.println("Hunt: lv" + skill.getHuntSkill());
         System.out.println("Collect: lv" + skill.getCollectSkill());
@@ -111,5 +121,6 @@ public class Player {
         System.out.println("");
         System.out.println("---Items in Bag---");
         items.viewItems();
+        System.out.println("------------------");
     }
 }

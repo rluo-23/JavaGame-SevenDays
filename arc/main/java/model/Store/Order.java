@@ -30,7 +30,6 @@ public class Order {
     }
 
     public void printOrder(){
-        System.out.println("New Order!");
         System.out.println("Elf ask for " + quantity + " " + item.getName() + "s");
         System.out.println("Reward: " + getTotalPrice());
     }

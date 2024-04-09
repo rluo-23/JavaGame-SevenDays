@@ -1,5 +1,6 @@
 package arc.main.java.model.Store;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,12 +20,18 @@ public class Store {
         orders = new ArrayList<Order>();
         this.player = player;
         random = new Random();
+        this.water = player.getWater();
+        this.itemDirectory = itemDirectory;
     }
 
     public Order newOrder(Item item, int quantity){
         Order order = new Order(item, quantity);
         orders.add(order);
         return order;
+    }
+
+    public ArrayList<Order> getOrders() {
+        return orders;
     }
 
     public void refreshOrder(){
@@ -40,6 +47,7 @@ public class Store {
         if(player.getMoney() >= water.getPrice()){
             player.setMoney(player.getMoney() - water.getPrice());
             player.getWater().setQuantity(player.getWater().getQuantity() + 1);
+            System.out.println("You have bought 1 water.");
             return true;
         }
         System.out.println("Not enough money to buy water.");
@@ -47,13 +55,26 @@ public class Store {
     }
 
     public Boolean submitOrder(Order order){
-        if(player.getItems().searchItem(order.getItem().getName()).getQuantity() >= order.getQuantity()){
+        if(player.getItems().searchItem(order.getItem().getName())!= null && player.getItems().searchItem(order.getItem().getName()).getQuantity() >= order.getQuantity()){
             player.setMoney(player.getMoney() + order.getTotalPrice());
-            player.getItems().searchItem(order.getItem().getName()).setQuantity(player.getItems().searchItem(order.getItem().getName()).getQuantity() - order.getQuantity());
+            if(player.getItems().searchItem(order.getItem().getName()).getQuantity() == order.getQuantity()){
+                player.getItems().getBagList().remove(player.getItems().searchItem(order.getItem().getName()));
+            } else {
+                player.getItems().searchItem(order.getItem().getName()).setQuantity(player.getItems().searchItem(order.getItem().getName()).getQuantity() - order.getQuantity());
+            }
+            orders.remove(order);
+            System.out.println("Order submitted.");
             return true;
         }
         System.out.println("Not enough " + order.getItem().getName() + " to submit order.");
         return false;
+    }
+
+    public void viewOrders(){
+        for(int i = 0; i < orders.size(); i++){
+            System.out.println("Order " + (i+1) + ": ");
+            orders.get(i).printOrder();
+        }
     }
 
 }

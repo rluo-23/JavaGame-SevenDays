@@ -15,14 +15,20 @@ public class BagList {
 
     public void viewItems(){
         for(int i = 0; i < bagList.size(); i++){
-            System.out.println("Item: " + bagList.get(i).getItem());
+            System.out.println("Item: " + bagList.get(i).getItem().getName());
             System.out.println("Quantity: " + bagList.get(i).getQuantity());
         }
     }
 
-    public void addItem(Item item, int quantity){
-        bagList.add(new BagItem(item, quantity));
-        quantity++;
+    public void addItem(Item item, int q){
+        if(searchItem(item.getName()) != null){
+            searchItem(item.getName()).setQuantity(searchItem(item.getName()).getQuantity() + q);
+        }
+        else{
+            BagItem bagItem = new BagItem(item, q);
+            bagList.add(bagItem);
+            quantity++;
+        }
     }
 
     public BagItem searchItem(String name){
@@ -40,5 +46,9 @@ public class BagList {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public ArrayList<BagItem> getBagList() {
+        return bagList;
     }
 }

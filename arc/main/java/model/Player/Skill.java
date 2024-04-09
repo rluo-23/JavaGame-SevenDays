@@ -8,7 +8,7 @@ public class Skill {
     public Skill(){
         huntSkill = 1;
         collectSkill = 1;
-        capacity = 1;
+        capacity = 3;
     }
 
     public int getHuntSkill() {
