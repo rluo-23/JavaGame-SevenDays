@@ -8,6 +8,10 @@ public class Water {
         this.price = 10;
         this.quantity = 0;
     }
+    public Water(int quantity) {
+        this.price = 10;
+        this.quantity = quantity;
+    }
 
     public void setPrice(int price) {
         this.price = price;

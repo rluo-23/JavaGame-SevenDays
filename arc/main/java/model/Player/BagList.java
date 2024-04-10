@@ -6,13 +6,17 @@ import arc.main.java.model.ItemManagement.Item;
 
 public class BagList {
     ArrayList<BagItem> bagList = new ArrayList<BagItem>();
-    int quantity = 0;
+    //int quantity = 0;
     
     public BagList(){
         this.bagList = new ArrayList<BagItem>();
-        this.quantity = 0;
+        //this.quantity = 0;
     }
 
+    public void setBagList(ArrayList<BagItem> bagList) {
+        this.bagList = bagList;
+    }
+    
     public void viewItems(){
         for(int i = 0; i < bagList.size(); i++){
             System.out.println("Item: " + bagList.get(i).getItem().getName());
@@ -27,7 +31,7 @@ public class BagList {
         else{
             BagItem bagItem = new BagItem(item, q);
             bagList.add(bagItem);
-            quantity++;
+            //quantity++;
         }
     }
 
@@ -40,15 +44,23 @@ public class BagList {
         return null;
     }
 
-    public int getQuantity() {
+/*     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
+    } */
 
     public ArrayList<BagItem> getBagList() {
         return bagList;
+    }
+
+    public int calTotalQuantity() {
+        int totalQuantity = 0;
+        for (BagItem item : bagList) {
+            totalQuantity += item.getQuantity();
+        }
+        return totalQuantity;
     }
 }

@@ -14,7 +14,7 @@ public class Activity {
     }
 
     public boolean checkCapacity(){
-        return player.getItems().getQuantity() < player.getSkill().getCapacity();
+        return player.getItems().calTotalQuantity() < player.getSkill().getCapacity();
     }
 
     public void setEvent(Event event){

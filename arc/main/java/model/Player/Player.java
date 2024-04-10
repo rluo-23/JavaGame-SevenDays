@@ -9,7 +9,7 @@ public class Player {
     int money;
     Skill skill;
     BagList items;
-    GameRecord gameRecord;
+    //GameRecord gameRecord;
     Water water;
 
     public Player(String name){
@@ -18,7 +18,7 @@ public class Player {
         this.money = 0;
         this.skill = new Skill();
         this.items = new BagList();
-        this.gameRecord = new GameRecord();
+        //this.gameRecord = new GameRecord();
         this.water = new Water();
     }
     public Player(){
@@ -26,11 +26,18 @@ public class Player {
         this.money = 0;
         this.skill = new Skill();
         this.items = new BagList();
-        this.gameRecord = new GameRecord();
+        //this.gameRecord = new GameRecord();
         this.water = new Water();
     }
 
-    public void saveGame(){
+    public Player( int date, int money, Skill skill, BagList items, Water water){
+        this.date = date;
+        this.money = money;
+        this.skill = skill;
+        this.items = items;
+        this.water = water;
+    }
+/*     public void saveGame(){
         gameRecord.setDate(date);
         gameRecord.setMoney(money);
         gameRecord.setSkill(skill);
@@ -42,7 +49,7 @@ public class Player {
         money = gameRecord.getMoney();
         skill = gameRecord.getSkill();
         items = gameRecord.getItems();
-    }
+    } */
 
     public Boolean checkAlive(){
         return water.getQuantity() > 0;
@@ -108,9 +115,9 @@ public class Player {
         return items;
     }
 
-    public GameRecord getGameRecord() {
+/*     public GameRecord getGameRecord() {
         return gameRecord;
-    }
+    } */
 
     public Water getWater() {
         return water;
@@ -137,11 +144,9 @@ public class Player {
         this.name = name;
     }
 
-    // 获取时间文本的方法
     public String getTimeText() {
-        int date = this.getDate(); // 获取玩家的日期属性
+        int date = this.getDate(); 
 
-        // 根据日期属性生成时间文本
         String timeText = "Day " + (date / 3 + 1);
         if (date % 3 == 0) {
             timeText += " In the morning";
@@ -152,6 +157,10 @@ public class Player {
         }
 
         return timeText;
+    }
+
+    public void addTime() {
+        date++;
     }
 
 }

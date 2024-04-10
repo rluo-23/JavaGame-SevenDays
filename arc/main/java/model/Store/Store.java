@@ -7,6 +7,7 @@ import java.util.Random;
 import arc.main.java.model.ItemManagement.ItemDirectory;
 import arc.main.java.model.ItemManagement.Item;
 import arc.main.java.model.ItemManagement.Water;
+import arc.main.java.model.Player.BagItem;
 import arc.main.java.model.Player.Player;
 
 public class Store {
@@ -55,18 +56,20 @@ public class Store {
     }
 
     public Boolean submitOrder(Order order){
-        if(player.getItems().searchItem(order.getItem().getName())!= null && player.getItems().searchItem(order.getItem().getName()).getQuantity() >= order.getQuantity()){
+        BagItem item = player.getItems().searchItem(order.getItem().getName());
+        
+        if (item != null && item.getQuantity() >= order.getQuantity()) {
             player.setMoney(player.getMoney() + order.getTotalPrice());
-            if(player.getItems().searchItem(order.getItem().getName()).getQuantity() == order.getQuantity()){
-                player.getItems().getBagList().remove(player.getItems().searchItem(order.getItem().getName()));
+
+            if (item.getQuantity() == order.getQuantity()) {
+                player.getItems().getBagList().remove(item);
             } else {
-                player.getItems().searchItem(order.getItem().getName()).setQuantity(player.getItems().searchItem(order.getItem().getName()).getQuantity() - order.getQuantity());
+                item.setQuantity(item.getQuantity() - order.getQuantity());
             }
+
             orders.remove(order);
-            //System.out.println("Order submitted.");
             return true;
         }
-        //System.out.println("Not enough " + order.getItem().getName() + " to submit order.");
         return false;
     }
 
