@@ -3,6 +3,7 @@ package arc.main.java.model.Player;
 import arc.main.java.model.ItemManagement.Water;
 
 public class Player {
+
     String name;
     int date;
     int money;
@@ -13,6 +14,14 @@ public class Player {
 
     public Player(String name){
         this.name = name;
+        this.date = 0;
+        this.money = 0;
+        this.skill = new Skill();
+        this.items = new BagList();
+        this.gameRecord = new GameRecord();
+        this.water = new Water();
+    }
+    public Player(){
         this.date = 0;
         this.money = 0;
         this.skill = new Skill();
@@ -123,4 +132,26 @@ public class Player {
         items.viewItems();
         System.out.println("------------------");
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // 获取时间文本的方法
+    public String getTimeText() {
+        int date = this.getDate(); // 获取玩家的日期属性
+
+        // 根据日期属性生成时间文本
+        String timeText = "Day " + (date / 3 + 1);
+        if (date % 3 == 0) {
+            timeText += " In the morning";
+        } else if (date % 3 == 1) {
+            timeText += " In the afternoon";
+        } else {
+            timeText += " In the evening";
+        }
+
+        return timeText;
+    }
+
 }

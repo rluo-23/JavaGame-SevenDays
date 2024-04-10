@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.JPanel;
+
 import arc.main.java.model.Player.Player;
 import arc.main.java.model.Player.BagItem;
 import arc.main.java.model.Player.BagList;
@@ -21,19 +23,21 @@ import arc.main.java.model.ItemManagement.Water;
 
 public class Game {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        UI ui = new UI();
         Random random = new Random();
         Determinator det = new Determinator();
 
-        System.out.println("Welcome to the game!");
-        System.out.println("What is your name?");
-        String name = scanner.nextLine();
-        Player player = new Player(name); 
+        ui.showMainScreen();
+
+        Player player = new Player();
+        ui.initializePlayer(player);
         Water water = new Water();
 
         ItemDirectory itemDirectory = new ItemDirectory();
         EventDirectory eventDirectory = new EventDirectory();
         Store  store = new Store(player, itemDirectory);
+
+        ui.initializeStore(store);
 
         // test items and events
         Item item1 = itemDirectory.newItem(0, "Apple", 8);
@@ -45,28 +49,18 @@ public class Game {
         eventDirectory.newEvent(item3, "You found a flower!");
         eventDirectory.newEvent(item4, "You found a deer!");
 
+        ui.initializeItemDirectory(itemDirectory);
+        ui.initializeEventDirectory(eventDirectory);
 /*         loadData.loadItems(itemDirectory);
         loadData.loadEvents(eventDirectory, itemDirectory); 
         itemDirectory.printItems();
         eventDirectory.printEvents(); */
 
-        while(player.getDate() <21){
-            System.out.println("Hi, " + player.getName() + ", It is day " + (player.getDate()/3 + 1));
-            if(player.getDate() % 3 == 0){
-                System.out.print("In the mornning, ");
-            }
-            else if(player.getDate() % 3 == 1){
-                System.out.print("In the afternoon, ");
-            }
-            else{
-                System.out.print("In the evening, ");
-            }
+/*            while(player.getDate() <21){
             System.out.println("What would you like to do?");
             System.out.println("1. Explore forest");
             System.out.println("2. Check Store");
             System.out.println("3. Check information");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
             if(choice == 1){
                 while(player.getItems().getQuantity() < player.getSkill().getCapacity()){
                     System.out.println("");
@@ -109,8 +103,8 @@ public class Game {
                     }
                 }
                 System.out.println("You have finished exploring.");
-            } 
-            else if(choice == 2){
+            }  */
+/*             else if(choice == 2){
                 int buy = -1;
                 store.refreshOrder();
                 while(buy != 3){
@@ -143,8 +137,8 @@ public class Game {
                         }
                     }
                 }
-            } 
-            else if(choice == 3){
+            }  */ 
+/*             else if(choice == 3){
                 player.viewInfo();
                 int enhance = -1;
                 while(enhance != 4){
@@ -179,7 +173,7 @@ public class Game {
                 }
             }
             player.setDate(player.getDate()+1);
-        }
+        }    */
 
         // test csv input
         

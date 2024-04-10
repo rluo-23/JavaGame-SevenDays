@@ -63,18 +63,16 @@ public class Store {
                 player.getItems().searchItem(order.getItem().getName()).setQuantity(player.getItems().searchItem(order.getItem().getName()).getQuantity() - order.getQuantity());
             }
             orders.remove(order);
-            System.out.println("Order submitted.");
+            //System.out.println("Order submitted.");
             return true;
         }
-        System.out.println("Not enough " + order.getItem().getName() + " to submit order.");
+        //System.out.println("Not enough " + order.getItem().getName() + " to submit order.");
         return false;
     }
 
-    public void viewOrders(){
-        for(int i = 0; i < orders.size(); i++){
-            System.out.println("Order " + (i+1) + ": ");
-            orders.get(i).printOrder();
-        }
+    public void viewOrders(int index){
+        orders.get(index).printOrder();
+        
     }
 
 }
