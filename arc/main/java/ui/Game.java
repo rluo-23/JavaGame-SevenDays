@@ -3,27 +3,14 @@ package arc.main.java.ui;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import arc.main.java.model.Player.Player;
-import arc.main.java.model.Player.BagItem;
-import arc.main.java.model.Player.BagList;
-import arc.main.java.model.Player.Skill;
 import arc.main.java.model.Store.Store;
-import arc.main.java.model.Activity.Activity;
-import arc.main.java.model.Determinator.Determinator;
-import arc.main.java.model.EventManagement.Event;
 import arc.main.java.model.EventManagement.EventDirectory;
 import arc.main.java.model.Game.loadData;
 import arc.main.java.model.ItemManagement.ItemDirectory;
-import arc.main.java.model.ItemManagement.Item;
-import arc.main.java.model.ItemManagement.Water;
 
 public class Game {
     public static void main(String[] args) {

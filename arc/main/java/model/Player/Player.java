@@ -37,19 +37,6 @@ public class Player {
         this.items = items;
         this.water = water;
     }
-/*     public void saveGame(){
-        gameRecord.setDate(date);
-        gameRecord.setMoney(money);
-        gameRecord.setSkill(skill);
-        gameRecord.setItems(items);
-    }
-
-    public void loadGame(){
-        date = gameRecord.getDate();
-        money = gameRecord.getMoney();
-        skill = gameRecord.getSkill();
-        items = gameRecord.getItems();
-    } */
 
     public Boolean checkAlive(){
         return water.getQuantity() > 0;
@@ -114,10 +101,6 @@ public class Player {
     public BagList getItems() {
         return items;
     }
-
-/*     public GameRecord getGameRecord() {
-        return gameRecord;
-    } */
 
     public Water getWater() {
         return water;

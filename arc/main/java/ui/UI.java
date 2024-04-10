@@ -5,22 +5,17 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import arc.main.java.model.Determinator.Determinator;
 import arc.main.java.model.EventManagement.Event;
 import arc.main.java.model.EventManagement.EventDirectory;
 import arc.main.java.model.ItemManagement.Item;
 import arc.main.java.model.ItemManagement.ItemDirectory;
-import arc.main.java.model.ItemManagement.Water;
 import arc.main.java.model.Player.BagItem;
-import arc.main.java.model.Player.BagList;
 import arc.main.java.model.Player.Player;
-import arc.main.java.model.Player.Skill;
 import arc.main.java.model.Store.Order;
 import arc.main.java.model.Store.Store;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.GridLayout;
@@ -134,7 +129,8 @@ public class UI extends JFrame {
     }
 
     public void loginPage() {
-        JOptionPane.showMessageDialog(null, "<html>Welcome to our game! You find yourself unexpectedly in a perilous enchanted<br>forest, shrouded in deadly mists. The passage to the outside world opens<br>only once every seven days. Luckily, a mysterious fairy merchant is willing to<br>sell you potent antidotes. Drinking one bottle daily grants immunity to the<br>forest's toxins, but you must gather materials to earn money.<br>Your objective: survive until the passage reopens in 7 days...</html>");
+        JOptionPane.showMessageDialog(null,
+                "<html>Welcome to our game! You find yourself unexpectedly in a perilous enchanted<br>forest, shrouded in deadly mists. The passage to the outside world opens<br>only once every seven days. Luckily, a mysterious fairy merchant is willing to<br>sell you potent antidotes. Drinking one bottle daily grants immunity to the<br>forest's toxins, but you must gather materials to earn money.<br>Your objective: survive until the passage reopens in 7 days...</html>");
         showHomePanel();
     }
 
@@ -387,7 +383,7 @@ public class UI extends JFrame {
 
         JButton exporeButton = new JButton("Expore");
 
-        JLabel backpackLabel = new JLabel("Backpack Capacity: " +  + player.getSkill().getCapacity());
+        JLabel backpackLabel = new JLabel("Backpack Capacity: " + +player.getSkill().getCapacity());
 
         JButton backHomeButton = new JButton("Back Home");
 
@@ -682,12 +678,12 @@ public class UI extends JFrame {
 
     public void loadGame() {
         String csvFileName = "arc/main/resources/data/record.csv";
-    
+
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFileName))) {
             String line;
             // 读取标题行
             reader.readLine();
-    
+
             // 读取玩家数据行
             line = reader.readLine();
             String[] data = line.split(",");
@@ -697,7 +693,7 @@ public class UI extends JFrame {
             int collectSkill = Integer.parseInt(data[3]);
             int capacity = Integer.parseInt(data[4]);
             int waterQuantity = Integer.parseInt(data[5]);
-    
+
             // 更新现有的 player 对象的属性
             player.setDate(date);
             player.setMoney(money);
@@ -705,10 +701,10 @@ public class UI extends JFrame {
             player.getSkill().setCollectSkill(collectSkill);
             player.getSkill().setCapacity(capacity);
             player.getWater().setQuantity(waterQuantity);
-    
+
             // 清空背包
             player.getItems().getBagList().clear();
-    
+
             // 读取玩家背包数据行
             while ((line = reader.readLine()) != null) {
                 data = line.split(",");
@@ -723,15 +719,15 @@ public class UI extends JFrame {
                     System.err.println("Item not found: " + itemName);
                 }
             }
-    
+
             // 提示加载成功
             JOptionPane.showMessageDialog(null, "Game loaded successfully.");
-    
+
         } catch (IOException e) {
             e.printStackTrace();
             // 提示加载失败
             JOptionPane.showMessageDialog(null, "Failed to load game.");
         }
     }
-    
+
 }

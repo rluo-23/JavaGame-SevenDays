@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import arc.main.java.model.EventManagement.Event;
 import arc.main.java.model.EventManagement.EventDirectory;
 import arc.main.java.model.ItemManagement.Item;
 import arc.main.java.model.ItemManagement.ItemDirectory;

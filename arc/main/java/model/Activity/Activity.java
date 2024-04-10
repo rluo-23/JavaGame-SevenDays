@@ -13,12 +13,12 @@ public class Activity {
         active = true;
     }
 
-    public boolean checkCapacity(){
+    public boolean checkCapacity() {
         return player.getItems().calTotalQuantity() < player.getSkill().getCapacity();
     }
 
-    public void setEvent(Event event){
+    public void setEvent(Event event) {
         currentEvent = event;
     }
-   
+
 }
