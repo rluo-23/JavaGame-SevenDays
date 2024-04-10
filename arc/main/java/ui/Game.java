@@ -34,21 +34,15 @@ public class Game {
         Player player = new Player();
         ui.initializePlayer(player);
 
+        // test csv input
         ItemDirectory itemDirectory = new ItemDirectory();
         EventDirectory eventDirectory = new EventDirectory();
+
+        loadData.loadItems(itemDirectory);
+        loadData.loadEvents(eventDirectory, itemDirectory);
         Store store = new Store(player, itemDirectory);
 
         ui.initializeStore(store);
-
-        Item item1 = itemDirectory.newItem(0, "Apple", 8);
-        Item item2 = itemDirectory.newItem(1, "Bear", 10);
-        Item item3 = itemDirectory.newItem(0, "Flower", 20);
-        Item item4 = itemDirectory.newItem(1, "Deer", 15);
-        eventDirectory.newEvent(item1, "You found an apple!");
-        eventDirectory.newEvent(item2, "You found a bear!");
-        eventDirectory.newEvent(item3, "You found a flower!");
-        eventDirectory.newEvent(item4, "You found a deer!");
-
         ui.initializeEventDirectory(eventDirectory);
         ui.initializeItemDirectory(itemDirectory);
 

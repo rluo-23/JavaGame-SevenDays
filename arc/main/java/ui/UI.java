@@ -51,7 +51,7 @@ public class UI extends JFrame {
     private Determinator det = new Determinator();
 
     public UI() {
-        super("Game Name");
+        super("SEVENDAYS");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null); // 将主窗口设置为屏幕中间位置
@@ -87,7 +87,7 @@ public class UI extends JFrame {
         gbc.anchor = GridBagConstraints.NORTH;
 
         mainPanel.add(titlePanel);
-        JLabel gameNameLable = new JLabel("Game Name");
+        JLabel gameNameLable = new JLabel("SEVENDAYS");
         gameNameLable.setFont(new Font("Times New Roman", Font.PLAIN, 108));
 
         titlePanel.add(gameNameLable);
@@ -134,10 +134,8 @@ public class UI extends JFrame {
     }
 
     public void loginPage() {
-
-        JOptionPane.showMessageDialog(null, "Welcome to the new game!");
+        JOptionPane.showMessageDialog(null, "<html>Welcome to our game! You find yourself unexpectedly in a perilous enchanted<br>forest, shrouded in deadly mists. The passage to the outside world opens<br>only once every seven days. Luckily, a mysterious fairy merchant is willing to<br>sell you potent antidotes. Drinking one bottle daily grants immunity to the<br>forest's toxins, but you must gather materials to earn money.<br>Your objective: survive until the passage reopens in 7 days...</html>");
         showHomePanel();
-
     }
 
     public void loadGamePage() {
@@ -272,7 +270,7 @@ public class UI extends JFrame {
 
         JPanel bagpackPanel = new JPanel();
         JLabel bagpackLabel = new JLabel("Bagpack");
-        JLabel antidoteLabel = new JLabel("Antidote" + "   1");
+        JLabel antidoteLabel = new JLabel("Antidote " + player.getWater().getQuantity());
         JPanel bagItemListPanel = createBagItemListPanel();
 
         bagpackPanel.add(bagpackLabel);
@@ -288,7 +286,8 @@ public class UI extends JFrame {
         myselfPanel.add(backHomeButton);
 
         backHomeButton.addActionListener(e -> {
-            showHomePanel();
+            createHomePanel();
+            showPanel(homePanel);
         });
 
     }
@@ -388,7 +387,7 @@ public class UI extends JFrame {
 
         JButton exporeButton = new JButton("Expore");
 
-        JLabel backpackLabel = new JLabel("Backpack" + "backpackCapacity");
+        JLabel backpackLabel = new JLabel("Backpack Capacity: " +  + player.getSkill().getCapacity());
 
         JButton backHomeButton = new JButton("Back Home");
 
@@ -418,7 +417,8 @@ public class UI extends JFrame {
         Event event = eventDirectory.pickRandomEvent();
         String eventInfo = event.getInformation();
 
-        int choice = JOptionPane.showOptionDialog(null, eventInfo, "Explore Event", JOptionPane.YES_NO_OPTION,
+        int choice = JOptionPane.showOptionDialog(null,
+                eventInfo, "Explore Event", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
         if (choice == JOptionPane.YES_OPTION) {
@@ -538,7 +538,7 @@ public class UI extends JFrame {
         buyAntidotePanel.setLayout(new BoxLayout(buyAntidotePanel, BoxLayout.Y_AXIS));
 
         JLabel antidoteLabel = new JLabel("Antidote");
-        JLabel antidotePriceLabel = new JLabel("AntidotePrice");
+        JLabel antidotePriceLabel = new JLabel("Price: " + player.getWater().getPrice());
         JButton buyAntidoteButton = new JButton("Buy");
         buyAntidotePanel.add(antidoteLabel);
         buyAntidotePanel.add(antidotePriceLabel);

@@ -56,7 +56,7 @@ public class Player {
     }
 
     public Boolean addHuntSkill(){
-        int need = 50+skill.getHuntSkill() * 50;
+        int need = 5+skill.getHuntSkill() * 5;
         if(money >= need){
             skill.addHuntSkill();
             money -= need;
@@ -68,7 +68,7 @@ public class Player {
     }
 
     public Boolean addCollectSkill(){
-        int need = 50+skill.getCollectSkill() * 50;
+        int need = 5+skill.getCollectSkill() * 5;
         if(money >= need){
             skill.addCollectSkill();
             money -= need;
@@ -80,7 +80,7 @@ public class Player {
     }
 
     public Boolean addCapacity(){
-        int need = 50+skill.getCapacity() * 50;
+        int need = 5+skill.getCapacity();
         if(money >= need){
             skill.addCapacity();
             money -= need;

@@ -17,7 +17,7 @@ public class loadData {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                //System.out.println("Line: " + line); 
+                // System.out.println("Line: " + line);
                 String[] data = line.split(",");
                 if (data.length == 3) {
                     int type = Integer.parseInt(data[0]);
@@ -32,17 +32,15 @@ public class loadData {
         }
     }
 
-    
-
     public static void loadEvents(EventDirectory eventDirectory, ItemDirectory itemDirectory) {
-        String filePath = "arc/main/resources/data/event.csv"; 
+        String filePath = "arc/main/resources/data/event.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                //System.out.println("Line: " + line); 
+                // System.out.println("Line: " + line);
                 String[] data = line.split(",");
-                if (data.length == 4) {
+                if (data.length == 2) {
                     String itemName = data[0];
                     String information = data[1];
                     Item item = itemDirectory.searchItem(itemName);
@@ -57,8 +55,5 @@ public class loadData {
             e.printStackTrace();
         }
     }
-
-    
-
 
 }
