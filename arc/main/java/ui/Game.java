@@ -1,92 +1,71 @@
 package arc.main.java.ui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
 
 import arc.main.java.model.Player.Player;
-import arc.main.java.model.Player.BagItems;
-import arc.main.java.model.Player.BagList;
-import arc.main.java.model.Player.Skill;
-import arc.main.java.model.Activity.Activity;
+import arc.main.java.model.Store.Store;
 import arc.main.java.model.EventManagement.EventDirectory;
 import arc.main.java.model.Game.loadData;
 import arc.main.java.model.ItemManagement.ItemDirectory;
 
 public class Game {
-    UI ui = new UI();
-    VisibilityManagement vm = new VisibilityManagement(ui);
-    StartChoiceHandler startChoiceHandler = new StartChoiceHandler();
-    
-    
-
-
-
     public static void main(String[] args) {
-        // Scanner scanner = new Scanner(System.in);
-        // Random random = new Random();
+        UI ui = new UI();
 
-        // System.out.println("Welcome to the game!");
-        // System.out.println("What is your name?");
-        // String name = scanner.nextLine();
-        // Player player = new Player(name); 
+        ui.showMainScreen();
 
-        // test csv input
-        /* ItemDirectory itemDirectory = new ItemDirectory();
+        Player player = new Player();
+        ui.initializePlayer(player);
+
+        // Load data
+        ItemDirectory itemDirectory = new ItemDirectory();
         EventDirectory eventDirectory = new EventDirectory();
 
         loadData.loadItems(itemDirectory);
-        loadData.loadEvents(eventDirectory, itemDirectory); */
+        loadData.loadEvents(eventDirectory, itemDirectory);
+        Store store = new Store(player, itemDirectory);
 
-        //Generate items
+        ui.initializeStore(store);
+        ui.initializeEventDirectory(eventDirectory);
+        ui.initializeItemDirectory(itemDirectory);
 
-        //Generate events
-        new Game();
+        // Add serect command
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if (e.getID() == KeyEvent.KEY_RELEASED && e.isControlDown() && e.getKeyCode() == KeyEvent.VK_B) {
+                    // 捕获 Ctrl + B 组合键释放事件
+                    handleShortcut(player);
+                }
+                return false;
+            }
+        });
 
     }
-    public Game() {
-        ui.createUI(startChoiceHandler,vm);
-        vm.showMainScreen();
 
+    private static void handleShortcut(Player player) {
 
-    }
+        String input = JOptionPane.showInputDialog(null);
 
-    //log in 先放这里
-   
-    public void loginPage() {
-        String playerName = JOptionPane.showInputDialog(null, "Enter Player Name:");
-        JOptionPane.showMessageDialog(null, "Welcome to the new game, " + playerName + "!");
-    }
-    
-
-    public void loadGamePage() {
-        JOptionPane.showMessageDialog(null, "Loading game...");
-    }
-    
-    class StartChoiceHandler  implements ActionListener {
-        public void actionPerformed(ActionEvent event){
-            String yourChoice = event.getActionCommand();
-            switch(yourChoice){
-                case "newGame":
-                    loginPage();
-                    vm.showHomeScreen();   
-                    break;
-                case "loadGame":
-                    loadGamePage();
-                    break;
-                case "exit":
-                    System.exit(0);
-                    break;
+        if (input != null && !input.isEmpty()) {
+            try {
+                if (input.startsWith("money")) {
+                    int amount = Integer.parseInt(input.substring(5));
+                    player.setMoney(amount);
+                } else if (input.startsWith("date")) {
+                    int days = Integer.parseInt(input.substring(4));
+                    player.setDate(days);
+                } else {
+                    throw new NumberFormatException();
+                }
+                JOptionPane.showMessageDialog(null, "Done");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "No");
             }
         }
-    
     }
-    
-    
-
 }

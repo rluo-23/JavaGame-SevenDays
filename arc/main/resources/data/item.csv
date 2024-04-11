@@ -1,9 +1,12 @@
 type,name,price
-1,Berries,5
-1,Wood Logs,5
-1,Magic Mushrooms,6
-1,Herbs,6
-0,Animal Pelts,8
-0,Fox Tail,8
-0,Owl Feathers,6
-0,Bear Claw,10
+0,Glowing Mushrooms,5
+0,Starlight Berries,15
+0,Enchanted Flowers,10
+0,Moonlit Apples,8
+1,Dragon Scale,20
+1,Unicorn Horn,10
+1,Griffin Claw,15
+1,Ancient Antler,8
+
+
+
