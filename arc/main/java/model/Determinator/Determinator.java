@@ -11,7 +11,7 @@ public class Determinator {
     }
 
     public Boolean getResult(int diff, int add) {
-        int randomInt = random.nextInt(6) + 2;
+        int randomInt = random.nextInt(10) + 2;
         return (randomInt + add) >= diff;
     }
 

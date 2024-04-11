@@ -1,10 +1,5 @@
 package arc.main.java.ui;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import arc.main.java.model.Determinator.Determinator;
@@ -17,21 +12,12 @@ import arc.main.java.model.Player.Player;
 import arc.main.java.model.Store.Order;
 import arc.main.java.model.Store.Store;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import java.awt.GridLayout;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Font;
 
 import arc.main.java.model.Game.loadData;
 
@@ -88,12 +74,12 @@ public class UI extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.NORTH;
 
-        mainPanel.add(titlePanel);
+        /* mainPanel.add(titlePanel);
         JLabel gameNameLable = new JLabel("SEVENDAYS");
         gameNameLable.setFont(new Font("Times New Roman", Font.PLAIN, 108));
 
         titlePanel.add(gameNameLable);
-        mainPanel.add(titlePanel, gbc);
+        mainPanel.add(titlePanel, gbc); */
 
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.CENTER;
@@ -118,6 +104,7 @@ public class UI extends JFrame {
         buttonPanel.add(exitGameButton, gbc);
 
         mainPanel.add(buttonPanel, gbc);
+        buttonPanel.setOpaque(false);
 
         // Add action listeners
         newGameButton.addActionListener(e -> {
@@ -254,7 +241,7 @@ public class UI extends JFrame {
             if (num > 0) {
                 player.getWater().setQuantity(num - 1);
                 System.out.println("Next day");
-                JOptionPane.showMessageDialog(null, "Next day");
+                JOptionPane.showMessageDialog(null, "As night falls, you consume a vial of potent antidotes to sustain your life.");
                 store.refreshOrder();
                 return true; // 返回 true 表示存活
             } else {
