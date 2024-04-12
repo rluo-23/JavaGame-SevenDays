@@ -4,8 +4,7 @@ Seven Days is a text-based survival adventure game with  Graphical User Interfac
 
 ## Features and Functionality
 
-- Developed using Java and Swing framework.
-- Rich graphical interface designed purely with Java code, no game engine used.
+- Developed using Java and Swing framework, no game engine used.
 - Engaging gameplay with various activities to enhance immersion.
 - Players can gather materials, explore, sell items, purchase equipment and upgrade skills, view personal information and inventory.
 - Save and load functionality included; no database used.
