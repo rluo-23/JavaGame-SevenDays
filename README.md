@@ -12,7 +12,7 @@ Seven Days is a text-based survival adventure game where you must survive for se
 
 ## System Requirements
 
-The game requires Java and Swing framework to be installed. Since it's a simple Java program, it can run on any computer capable of running Java programs.
+The game requires the installation of the Java Development Kit (JDK).
 
 ## Getting Started
 
