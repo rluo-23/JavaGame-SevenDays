@@ -18,7 +18,6 @@ public class loadData {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                // System.out.println("Line: " + line);
                 String[] data = line.split(",");
                 if (data.length == 3) {
                     int type = Integer.parseInt(data[0]);
@@ -42,7 +41,6 @@ public class loadData {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                // System.out.println("Line: " + line);
                 String[] data = line.split(",");
                 if (data.length == 2) {
                     String itemName = data[0];

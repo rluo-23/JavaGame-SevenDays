@@ -44,8 +44,9 @@ public class Store {
     }
 
     public Boolean buyWater() {
-        if (player.getMoney() >= water.getPrice()) {
-            player.setMoney(player.getMoney() - water.getPrice());
+        int currentWaterPrice = water.getPrice() + (player.getDate() / 3) * 10;
+        if (player.getMoney() >= currentWaterPrice) {
+            player.setMoney(player.getMoney() - currentWaterPrice);
             player.getWater().setQuantity(player.getWater().getQuantity() + 1);
             System.out.println("You have bought 1 water.");
             return true;

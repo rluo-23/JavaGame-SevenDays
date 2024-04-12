@@ -9,7 +9,6 @@ public class Player {
     int money;
     Skill skill;
     BagList items;
-    //GameRecord gameRecord;
     Water water;
 
     public Player(String name){
@@ -18,7 +17,6 @@ public class Player {
         this.money = 0;
         this.skill = new Skill();
         this.items = new BagList();
-        //this.gameRecord = new GameRecord();
         this.water = new Water();
     }
     public Player(){
@@ -26,7 +24,6 @@ public class Player {
         this.money = 0;
         this.skill = new Skill();
         this.items = new BagList();
-        //this.gameRecord = new GameRecord();
         this.water = new Water();
     }
     public void resetPlayer(){

@@ -28,11 +28,9 @@ public class UI extends JFrame {
             storePanel, successPanel, failPanel;
 
     private Player player;
-    // private Water water;
     private ItemDirectory itemDirectory;
     private EventDirectory eventDirectory;
     private Store store;
-    // private Event event;
 
     private Determinator det = new Determinator();
 
@@ -853,7 +851,8 @@ public class UI extends JFrame {
         antidoteLabelPanel.add(imageLabel);
         antidoteLabelPanel.add(antidoteLabel);
 
-        JLabel antidotePriceLabel = new JLabel("Price: " + player.getWater().getPrice(), SwingConstants.CENTER);
+        int currentWaterPrice = player.getWater().getPrice() + (player.getDate() / 3) * 10;
+        JLabel antidotePriceLabel = new JLabel("Price: " + currentWaterPrice, SwingConstants.CENTER);
         JButton buyAntidoteButton = createTransparentButton("Buy");
         JPanel buyAntidoteButtonPanel = new JPanel();
         buyAntidoteButtonPanel.add(buyAntidoteButton);

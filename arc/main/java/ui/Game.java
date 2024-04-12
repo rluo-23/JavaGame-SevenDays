@@ -38,7 +38,7 @@ public class Game {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if (e.getID() == KeyEvent.KEY_RELEASED && e.isControlDown() && e.getKeyCode() == KeyEvent.VK_B) {
-                    // 捕获 Ctrl + B 组合键释放事件
+                    // Ctrl + B
                     handleShortcut(player);
                 }
                 return false;

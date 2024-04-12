@@ -3,6 +3,7 @@ package arc.main.java.model.ItemManagement;
 public class Water {
     int price;
     int quantity;
+    
 
     public Water() {
         this.price = 10;
