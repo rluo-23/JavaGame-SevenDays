@@ -18,7 +18,7 @@ The game requires the installation of the Java Development Kit (JDK).
 To get the source code of the game and run it:
 
 1. Clone or download the folder from GitHub.
-2. Run arc/main/java/ui/Game.java
+2. Run arc/java/main/java/ui/Game.java
 
 ## Gameplay Instructions
 

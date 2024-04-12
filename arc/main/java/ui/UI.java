@@ -1,6 +1,7 @@
 package arc.main.java.ui;
 
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import arc.main.java.model.Determinator.Determinator;
 import arc.main.java.model.EventManagement.Event;
@@ -16,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.cert.CertificateEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class UI extends JFrame {
     public UI() {
         super("SEVENDAYS");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1000, 800);
         setLocationRelativeTo(null); // 将主窗口设置为屏幕中间位置
         setVisible(true);
         // showMainScreen();
@@ -62,60 +64,84 @@ public class UI extends JFrame {
         this.store = store;
     }
 
+    
     public void createMainPanel() {
         mainPanel = new BackgroundPanel("arc/main/resources/images/main.JPG");
         mainPanel.setLayout(new GridBagLayout());
-
-        JPanel titlePanel = new JPanel();
-
+        
+       
+    
         GridBagConstraints gbc = new GridBagConstraints();
+    
+        // 添加一个透明的panel作为占位符，来推动buttonPanel进一步下移
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 0; // 这个panel位于buttonPanel之前的位置
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.8; // 调整这个值来控制buttonPanel的垂直位置
         gbc.fill = GridBagConstraints.BOTH;
+        JPanel spacerPanel = new JPanel();
+        spacerPanel.setOpaque(false); // 设置为透明
+        mainPanel.add(spacerPanel, gbc);
+    
+        // 为buttonPanel设置约束
+        gbc.gridy = 1; // 现在这个是buttonPanel的位置
+        gbc.weighty = 0.7; // 为buttonPanel和其它组件之间留出空间
         gbc.anchor = GridBagConstraints.NORTH;
-
-        gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
-
+    
         JPanel buttonPanel = new JPanel(new GridBagLayout());
-
-        JButton newGameButton = new JButton("New Game");
-        JButton loadGameButton = new JButton("Load Game");
-        JButton exitGameButton = new JButton("Exit Game");
-
-        // Set buttonPanel layout
-        gbc.insets = new Insets(10, 10, 10, 10); // 设置组件之间的间距
-
+        buttonPanel.setOpaque(false); // 设置为透明
+    
+        // 重新配置gbc用于buttonPanel内的按钮
+        gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10);
+    
+        JButton newGameButton = createTransparentButton("New Game");
+        JButton loadGameButton = createTransparentButton("Load Game");
+        JButton exitGameButton = createTransparentButton("Exit Game");
+    
+        gbc.gridy = 0; 
         buttonPanel.add(newGameButton, gbc);
-
+    
         gbc.gridy = 1;
         buttonPanel.add(loadGameButton, gbc);
-
+    
         gbc.gridy = 2;
         buttonPanel.add(exitGameButton, gbc);
-
-        mainPanel.add(buttonPanel, gbc);
-        buttonPanel.setOpaque(false);
-
-        // Add action listeners
+    
+        // 将buttonPanel添加到mainPanel中
+        GridBagConstraints gbcPanel = new GridBagConstraints();
+        gbcPanel.gridx = 0;
+        gbcPanel.gridy = 1; // 在spacerPanel下方
+        gbcPanel.fill = GridBagConstraints.BOTH;
+        gbcPanel.weightx = 1.0;
+        gbcPanel.weighty = 0.7; // 给予buttonPanel的空间，使其可以下移
+        gbcPanel.anchor = GridBagConstraints.NORTH;
+        mainPanel.add(buttonPanel, gbcPanel);
+    
+        // 添加动作监听器
         newGameButton.addActionListener(e -> {
             player.resetPlayer();
             loginPage();
         });
-
+    
         loadGameButton.addActionListener(e -> {
             loadGame();
             showHomePanel();
         });
-
+    
         exitGameButton.addActionListener(e -> {
             System.exit(0);
         });
+        
+       
+      
 
     }
-
+    
+    
+    
     public void loginPage() {
         JOptionPane.showMessageDialog(null,
                 "<html>Welcome to our game! You find yourself unexpectedly in a perilous enchanted<br>forest, shrouded in deadly mists. The passage to the outside world opens<br>only once every seven days. Luckily, a mysterious fairy merchant is willing to<br>sell you potent antidotes. Drinking one bottle daily grants immunity to the<br>forest's toxins, but you must gather materials to earn money.<br>Your objective: survive until the passage reopens in 7 days...</html>");
@@ -124,6 +150,7 @@ public class UI extends JFrame {
 
     public void createHomePanel() {
         homePanel = new JPanel(new GridBagLayout());
+        homePanel.setBackground(Color.BLACK); // 
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -156,7 +183,7 @@ public class UI extends JFrame {
         headerPanel.add(infoPanel, BorderLayout.WEST);
 
         // 创建 Go Myself 按钮
-        JButton goMyselfButton = new JButton("Myself");
+        JButton goMyselfButton = createTransparentButton("Myself");
         // 将 goMyselfButton 添加到 headerPanel 的右侧
         headerPanel.add(goMyselfButton, BorderLayout.EAST);
 
@@ -174,10 +201,10 @@ public class UI extends JFrame {
         JPanel footerPanel = new JPanel();
         footerPanel.setLayout(new BorderLayout());
 
-        JButton saveGameButton = new JButton("Save Game");
+        JButton saveGameButton = createTransparentButton("Save Game");
         footerPanel.add(saveGameButton, BorderLayout.WEST);
 
-        JButton backMainButton = new JButton("Back Main");
+        JButton backMainButton = createTransparentButton("Back Main");
         footerPanel.add(backMainButton, BorderLayout.EAST);
 
         gbc.weightx = 1;
@@ -215,6 +242,42 @@ public class UI extends JFrame {
         goStoreButton.addActionListener(e -> {
             showStorePanel();
         });
+
+        
+        backMainButton.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        saveGameButton.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        goMyselfButton.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        
+        backMainButton.setForeground(Color.WHITE);
+        footerPanel.setBackground(Color.BLACK);
+        
+        Border whiteBorder = BorderFactory.createLineBorder(Color.WHITE, 2);
+
+// 给按钮设置边框
+backMainButton.setBorder(whiteBorder);
+
+
+        // 对于timeLabel
+timeLabel.setOpaque(true); // 使标签不透明，背景色才能显示
+timeLabel.setBackground(Color.BLACK); // 设置背景色为黑色
+timeLabel.setForeground(Color.WHITE); // 设置字体颜色为白色
+
+// 对于moneyLabel
+moneyLabel.setOpaque(true); // 同上，使标签不透明
+moneyLabel.setBackground(Color.BLACK); // 设置背景色为黑色
+moneyLabel.setForeground(Color.WHITE); // 设置字体颜色为白色
+
+
+headerPanel.setBackground(Color.BLACK); // 设置 headerPanel 的背景色为黑色
+infoPanel.setBackground(Color.BLACK); // 设置 infoPanel 的背景色为黑色
+//字体
+
+timeLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+moneyLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+
+
+       
+
 
     }
 
@@ -259,44 +322,62 @@ public class UI extends JFrame {
         skillAndBagPanel.add(skillListPanel);
         skillAndBagPanel.add(bagItemListPanel);
 
-        JButton backHomeButton = new JButton("Back Home");
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(backHomeButton);
+        
+        JButton backHomeButton = createTransparentButton("Back Home");
+        JPanel backHomeButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        backHomeButtonPanel.add(backHomeButton);
+        
 
         myselfPanel.add(moneyPanel, BorderLayout.NORTH);
         myselfPanel.add(skillAndBagPanel, BorderLayout.CENTER);
-        myselfPanel.add(buttonPanel, BorderLayout.SOUTH);
+        myselfPanel.add(backHomeButtonPanel, BorderLayout.SOUTH);
 
         backHomeButton.addActionListener(e -> {
             createHomePanel();
             showPanel(homePanel);
         });
 
+        //设置字体
+        moneyLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        moneyLabel.setForeground(Color.WHITE);
+        moneyPanel.setBackground(Color.BLACK);
+        skillAndBagPanel.setBackground(Color.BLACK);
+        myselfPanel.setBackground(Color.BLACK);
+        backHomeButtonPanel.setBackground(Color.BLACK);
+        
+
+
+
     }
 
     public JPanel createSkillListPanel() {
-        JPanel skillListPanel = new JPanel(new GridLayout(3, 3, 10, 10));
+        JPanel skillListPanel = new JPanel();
         skillListPanel.setBorder(BorderFactory.createTitledBorder("Skill List"));
 
-        JLabel huntingLabel = new JLabel("Hunting", SwingConstants.CENTER);
-        JLabel GatheringLabel = new JLabel("Gathering", SwingConstants.CENTER);
-        JLabel backpackCapacityLabel = new JLabel("BackPack", SwingConstants.CENTER);
-        JLabel hungtingLevelLabel = new JLabel(player.getSkill().getHuntSkill() + "", SwingConstants.CENTER);
-        JLabel gatheringLevelLabel = new JLabel(player.getSkill().getCollectSkill() + "", SwingConstants.CENTER);
-        JLabel backpackLevelLabel = new JLabel(player.getSkill().getCapacity() + "", SwingConstants.CENTER);
-        JButton upgradeHuntingButton = new JButton("Upgrade");
-        JButton upgradeGatheringButton = new JButton("Upgrade");
-        JButton upgradeBackpackButton = new JButton("Upgrade");
+        JLabel huntingLabel = new JLabel("Hunting" );
+        JLabel GatheringLabel = new JLabel("Gathering");
+        JLabel backpackCapacityLabel = new JLabel("BackPack");
+        JLabel hungtingLevelLabel = new JLabel(player.getSkill().getHuntSkill() + "");
+        JLabel gatheringLevelLabel = new JLabel(player.getSkill().getCollectSkill() + "");
+        JLabel backpackLevelLabel = new JLabel(player.getSkill().getCapacity() + "");
+        JButton upgradeHuntingButton = createTransparentButton("Upgrade");
+        JButton upgradeGatheringButton = createTransparentButton("Upgrade");
+        JButton upgradeBackpackButton = createTransparentButton("Upgrade");
 
-        skillListPanel.add(huntingLabel);
-        skillListPanel.add(hungtingLevelLabel);
-        skillListPanel.add(upgradeHuntingButton);
-        skillListPanel.add(GatheringLabel);
-        skillListPanel.add(gatheringLevelLabel);
-        skillListPanel.add(upgradeGatheringButton);
-        skillListPanel.add(backpackCapacityLabel);
-        skillListPanel.add(backpackLevelLabel);
-        skillListPanel.add(upgradeBackpackButton);
+        JPanel upgradeHuntingButtonPanel = new JPanel(new BorderLayout());
+        JPanel upgradeGatheringButtonPanel = new JPanel(new BorderLayout());
+        JPanel upgradeBackpackButtonPanel = new JPanel(new BorderLayout()); 
+
+
+        upgradeHuntingButtonPanel.add(upgradeHuntingButton, BorderLayout.CENTER);
+        
+        upgradeGatheringButtonPanel.add(upgradeGatheringButton, BorderLayout.CENTER);
+        upgradeBackpackButtonPanel.add(upgradeBackpackButton, BorderLayout.CENTER);
+
+
+
+     
+
 
         upgradeBackpackButton.addActionListener(e -> {
             upgrade(0);
@@ -308,37 +389,182 @@ public class UI extends JFrame {
             upgrade(2);
         });
 
+        
+
+        //布局
+        skillListPanel.setLayout(new GridBagLayout());
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        // 设置约束条件，使组件水平和垂直填充其显示区域
+        gbc.fill = GridBagConstraints.BOTH;
+
+        // 为网格中的每个位置设置权重，权重是用来确定如何分配额外的空间
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+
+        // 设置内部填充，即组件周围的空间
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0; // Assign horizontal space equally
+        gbc.weighty = 1.0; // Assign vertical space equally
+
+        // Component 1
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        skillListPanel.add(huntingLabel, gbc);
+
+        // Component 2
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        skillListPanel.add(hungtingLevelLabel, gbc);
+
+        // Component 3
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        skillListPanel.add(upgradeHuntingButtonPanel, gbc);
+
+        // Component 4
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        skillListPanel.add(GatheringLabel, gbc);
+
+        // Component 5
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        skillListPanel.add(gatheringLevelLabel, gbc);
+
+        // Component 6
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        skillListPanel.add(upgradeGatheringButtonPanel, gbc);
+
+        // Component 7
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        skillListPanel.add(backpackCapacityLabel, gbc);
+
+        // Component 8
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        skillListPanel.add(backpackLevelLabel, gbc);
+
+        // Component 9
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        skillListPanel.add(upgradeBackpackButtonPanel, gbc);
+
+
+        //设置字体
+        huntingLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        GatheringLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        backpackCapacityLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        hungtingLevelLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        gatheringLevelLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        backpackLevelLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        //设置颜色
+        huntingLabel.setForeground(Color.WHITE);
+        GatheringLabel.setForeground(Color.WHITE);
+        backpackCapacityLabel.setForeground(Color.WHITE);
+        hungtingLevelLabel.setForeground(Color.WHITE);
+        gatheringLevelLabel.setForeground(Color.WHITE);
+        backpackLevelLabel.setForeground(Color.WHITE);
+        //设置背景颜色
+        skillListPanel.setBackground(Color.BLACK);
+        huntingLabel.setBackground(Color.BLACK);
+        GatheringLabel.setBackground(Color.BLACK);
+        backpackCapacityLabel.setBackground(Color.BLACK);
+        hungtingLevelLabel.setBackground(Color.BLACK);
+        gatheringLevelLabel.setBackground(Color.BLACK);
+        backpackLevelLabel.setBackground(Color.BLACK);
+        
+       //设置border
+         // 创建带标题的边框
+         TitledBorder titledBorder = BorderFactory.createTitledBorder("Skill List");
+         // 设置标题字体（字体名称，样式，大小）
+         titledBorder.setTitleFont(new Font("Lucida Grande", Font.PLAIN, 30));
+         // 设置标题颜色
+         titledBorder.setTitleColor(Color.white);
+         //设施边框颜色
+         titledBorder.setBorder(BorderFactory.createLineBorder(Color.white));
+         
+         // 将边框应用到 JPanel 上
+         skillListPanel.setBorder(titledBorder);
+
+         
+
+        
+        
         return skillListPanel;
 
     }
 
+    
+
+    
+
     private JPanel createBagItemListPanel() {
         JPanel bagItemListPanel = new JPanel(new GridLayout(3, 3, 10, 10));
-        bagItemListPanel.setBorder(BorderFactory.createTitledBorder("背包"));
+        bagItemListPanel.setBorder(BorderFactory.createTitledBorder("Backpack "));
         for (int i = -1; i < player.getItems().getBagList().size(); i++) {
             JPanel imagePanel = new JPanel();
             imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.Y_AXIS));
             // 假设的图片路径，这里需要替换为实际路径
-            ImageIcon icon = new ImageIcon("arc/main/resources/images/Screen Shot 2024-04-11 at 00.44.16.png");
-            Image image = icon.getImage(); // 转换为 Image 对象
-            Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            icon = new ImageIcon(scaledImage);
-            JLabel imageLabel = new JLabel(icon, SwingConstants.CENTER);
+            ImageIcon icon ;
+          
             JLabel label;
             if (i == -1) {
-                label = new JLabel("Antidote" + +player.getWater().getQuantity());
+                label = new JLabel("Antidote *" + +player.getWater().getQuantity());
+                icon = new ImageIcon("arc/main/resources/images/Antidote.png");
+                label.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+                label.setForeground(Color.WHITE);
+                label.setBackground(Color.BLACK);
+
 
             } else {
                 label = new JLabel(player.getItems().getBagList().get(i).getItem().getName() + " *"
                         + player.getItems().getBagList().get(i).getQuantity());
+                icon = new ImageIcon("arc/main/resources/images/" + player.getItems().getBagList().get(i).getItem().getName() + ".png");
+                label.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+                label.setForeground(Color.WHITE);
+                label.setBackground(Color.BLACK);
             }
+            Image image = icon.getImage(); // 转换为 Image 对象
+            Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            icon = new ImageIcon(scaledImage);
+            JLabel imageLabel = new JLabel(icon, SwingConstants.CENTER);
 
             imagePanel.add(imageLabel);
             imagePanel.add(label);
 
+            imagePanel.setBackground(Color.BLACK);
+
+
+
             bagItemListPanel.add(imagePanel);
         }
+
+        bagItemListPanel.setBackground(Color.BLACK);
+
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Backpack");
+         // 设置标题字体（字体名称，样式，大小）
+         titledBorder.setTitleFont(new Font("Lucida Grande", Font.PLAIN, 30));
+         // 设置标题颜色
+         titledBorder.setTitleColor(Color.white);
+         //设施边框颜色
+         titledBorder.setBorder(BorderFactory.createLineBorder(Color.white));
+         
+         // 将边框应用到 JPanel 上
+         bagItemListPanel.setBorder(titledBorder);
+
+         
+
         return bagItemListPanel;
+        
+
+
+    
+        
     }
 
     public void upgrade(int i) {
@@ -412,27 +638,77 @@ public class UI extends JFrame {
         myselfPanel.repaint();
     }
 
+    
+
+
     public void createForestPanel() {
-        forestPanel = new BackgroundPanel("arc/main/resources/images/forestpage.JPG");
+        forestPanel = new JPanel();
+        forestPanel.setBackground(Color.BLACK);
+        forestPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        JLabel forestlabel = new JLabel("Forest");
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+    
+        //创建一个新的 Insets 对象来指定边框的内边距
+        Insets panelInsets = new Insets(10, 10, 10, 10); // 上、左、下、右
+        // 将 Insets 应用到 GridBagConstraints
+        gbc.insets = panelInsets;
+// 第一行 - Header Panel
+     JPanel headerPanel = new JPanel();
 
-        JButton exporeButton = new JButton("Expore");
+      headerPanel.setLayout(new BorderLayout()); // 使用边界布局
+      int remainingCapacity = player.getSkill().getCapacity() - player.getItems().calTotalQuantity();
+      JLabel backpackLabel = new JLabel("Remaining Capacity: " + remainingCapacity);
+      JPanel backpackPanel = new JPanel();
+      backpackPanel.add(backpackLabel);
+        headerPanel.add(backpackPanel, BorderLayout.WEST);
+        
+        
 
-        int RemainingCapacity = player.getSkill().getCapacity() - player.getItems().calTotalQuantity();
 
-        JLabel backpackLabel = new JLabel("Remaining Capacity: " + RemainingCapacity);
-        JPanel backpackPanel = new JPanel();
-        backpackPanel.add(backpackLabel);
 
-        JButton backHomeButton = new JButton("Back Home");
 
-        forestPanel.add(forestlabel);
-        forestPanel.add(backpackPanel);
-        forestPanel.add(exporeButton);
-        forestPanel.add(backHomeButton);
 
-        exporeButton.addActionListener(e -> {
+
+          // 第二行 - Main Panel
+    JPanel secondPanel = new BackgroundPanel("arc/main/resources/images/forestpage.JPG");
+     secondPanel.setLayout(new BorderLayout());
+     JLabel forestLabel = new JLabel("");
+        secondPanel.add(forestLabel, BorderLayout.CENTER);
+
+        // 第三行 - Footer Panel
+       JPanel footerPanel = new JPanel();
+       footerPanel.setLayout(new BorderLayout());
+        // 添加 Explore 按钮
+        JButton exploreButton = createTransparentButton("Explore");
+    
+    
+        // 添加 Back Home 按钮
+        JButton backHomeButton = createTransparentButton("Back Home");
+        footerPanel.add(backHomeButton, BorderLayout.EAST);
+        footerPanel.add(exploreButton, BorderLayout.WEST);
+
+
+     gbc.weightx = 1;
+
+    // Add panels to forestPanel
+         gbc.gridy = 0;
+         gbc.weighty = 0.05;
+         forestPanel.add(headerPanel, gbc); // 添加到第一行
+
+        gbc.gridy = 1;
+        gbc.weighty = 0.9;
+        forestPanel.add(secondPanel, gbc); // 添加到第二行
+
+        gbc.gridy = 2;
+       gbc.weighty = 0.05;
+       forestPanel.add(footerPanel, gbc); // 添加到第三行
+
+        // 添加 Explore 按钮的监听器
+        exploreButton.addActionListener(e -> {
             if (player.getItems().calTotalQuantity() < player.getSkill().getCapacity()) {
                 exploreEvent();
                 createForestPanel();
@@ -440,14 +716,42 @@ public class UI extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Your backpack is full! You can't explore anymore.");
             }
-
         });
-
+    
+        // 添加 Back Home 按钮的监听器
         backHomeButton.addActionListener(e -> {
             showHomePanel();
         });
+       
+        //设置字体
+        backpackLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        forestLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        exploreButton.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        backHomeButton.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        //设置颜色
+        backpackLabel.setForeground(Color.WHITE);
+        forestLabel.setForeground(Color.WHITE);
+        exploreButton.setForeground(Color.WHITE);
+        backHomeButton.setForeground(Color.WHITE);
+        //设置背景颜色
+        headerPanel.setBackground(Color.BLACK);
+        secondPanel.setBackground(Color.BLACK);
+        footerPanel.setBackground(Color.BLACK);
+        backpackLabel.setBackground(Color.BLACK);
+        backpackPanel.setBackground(Color.BLACK);
+        forestLabel.setBackground(Color.BLACK);
+
+
+        
+
+
+
+        
 
     }
+   
+    
+   
 
     public void exploreEvent() {
         String[] options = { "Yes", "No" }; // 设置按钮的文本
@@ -512,10 +816,19 @@ public class UI extends JFrame {
 
         // 设置边框
         orderListPanel.setBorder(BorderFactory.createTitledBorder("Order List")); // 创建一个标题边框并设置标题为 "Order List"
+        // 创建一个带有自定义边框和标题颜色的边框
+Border border = BorderFactory.createLineBorder(Color.white); // 边框颜色为红色
+TitledBorder titledBorder = BorderFactory.createTitledBorder(border, "Order List"); // 标题为 "AntiDote"
+titledBorder.setTitleColor(Color.white); // 标题颜色为蓝色
+titledBorder.setTitleFont(new Font("Lucida Grande", Font.PLAIN, 30));
 
+// 将带有自定义边框和标题颜色的边框设置给 buyAntidotePanel
+orderListPanel.setBorder(titledBorder);
         for (int i = 0; i < store.getOrders().size(); i++) {
             orderListPanel.add(createOrderPanel(i));
         }
+        orderListPanel.setBackground(Color.BLACK);
+        
 
         return orderListPanel;
 
@@ -577,12 +890,17 @@ public class UI extends JFrame {
     public JPanel createOrderPanel(int i) {
         JPanel orderPanel = new JPanel();
         orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
+        String imagePath = "arc/main/resources/images/"+store.getOrders().get(i).getItem().getName() + ".png";
+        
+        ImageIcon imageIcon = new ImageIcon(imagePath);
+       
+        JLabel imageLabel = new JLabel(imageIcon);
 
         JLabel itemLabel = new JLabel("Item: " + store.getOrders().get(i).getItem().getName());
         JLabel quantityLabel = new JLabel("Quantity: " + store.getOrders().get(i).getQuantity());
         JLabel rewardsLabel = new JLabel("Rewards: " + store.getOrders().get(i).getTotalPrice());
-        JButton submitOrderButton = new JButton("Submit Order");
-        ;
+        JButton submitOrderButton = createTransparentButton("Submit Order");
+        orderPanel.add(imageLabel);
         orderPanel.add(itemLabel);
         orderPanel.add(quantityLabel);
         orderPanel.add(rewardsLabel);
@@ -591,6 +909,33 @@ public class UI extends JFrame {
         submitOrderButton.addActionListener(e -> {
             submitOrder(i);
         });
+        
+        //设置字体
+        itemLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+        quantityLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        rewardsLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        //设置颜色
+        itemLabel.setForeground(Color.WHITE);
+        quantityLabel.setForeground(Color.WHITE);
+        rewardsLabel.setForeground(Color.WHITE);
+        
+        //设置背景颜色
+        orderPanel.setBackground(Color.BLACK);
+        itemLabel.setBackground(Color.BLACK);
+        quantityLabel.setBackground(Color.BLACK);
+        rewardsLabel.setBackground(Color.BLACK);
+
+        //设置图片
+        Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // 设置图片大小为 100x100
+imageIcon.setImage(image);
+        //设置图片和文字居中
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        itemLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        quantityLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rewardsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        submitOrderButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+
 
         return orderPanel;
     }
@@ -627,18 +972,33 @@ public class UI extends JFrame {
         antidoteAndOrderPanel.add(orderListPanel);
         buyAntidotePanel.setLayout(new GridLayout(3, 1, 10, 10));
         buyAntidotePanel.setBorder(BorderFactory.createTitledBorder("AntiDote"));
+        JPanel antidoteLabelPanel = new JPanel();
+        ImageIcon imageIcon = new ImageIcon("arc/main/resources/images/Antidote.png");
+        JLabel imageLabel = new JLabel(imageIcon);
+        Image image = imageIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH); // 设置图片大小为 100x100
+        imageIcon.setImage(image);
         JLabel antidoteLabel = new JLabel("Antidote", SwingConstants.CENTER);
+
+        antidoteLabelPanel.add(imageLabel);
+        antidoteLabelPanel.add(antidoteLabel);
+    
+
         JLabel antidotePriceLabel = new JLabel("Price: " + player.getWater().getPrice(), SwingConstants.CENTER);
-        JButton buyAntidoteButton = new JButton("Buy");
-        buyAntidotePanel.add(antidoteLabel);
+        JButton buyAntidoteButton = createTransparentButton("Buy");
+        JPanel buyAntidoteButtonPanel = new JPanel();
+        buyAntidoteButtonPanel.add(buyAntidoteButton);
+        buyAntidotePanel.add(antidoteLabelPanel);
         buyAntidotePanel.add(antidotePriceLabel);
-        buyAntidotePanel.add(buyAntidoteButton);
+        buyAntidotePanel.add(buyAntidoteButtonPanel);
 
-        JButton backHomeButton = new JButton("Back Home");
-
+        JButton backHomeButton = createTransparentButton("Back Home");
+        JPanel backHomeButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        backHomeButtonPanel.add(backHomeButton);
+        
+        
         storePanel.add(moneyPanel, BorderLayout.NORTH);
         storePanel.add(antidoteAndOrderPanel, BorderLayout.CENTER);
-        storePanel.add(backHomeButton, BorderLayout.SOUTH);
+        storePanel.add(backHomeButtonPanel, BorderLayout.SOUTH);
 
         backHomeButton.addActionListener(e -> {
             showHomePanel();
@@ -646,26 +1006,59 @@ public class UI extends JFrame {
         buyAntidoteButton.addActionListener(e -> {
             buyAntidote();
         });
+        
+        Dimension buttonSize = new Dimension(50, 30);
+        buyAntidoteButton.setMaximumSize(buttonSize);
+
+        // 设置字体
+        moneyLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        antidoteLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        antidotePriceLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+       
+       
+        // 设置颜色
+        moneyLabel.setForeground(Color.WHITE);
+        antidoteLabel.setForeground(Color.WHITE);
+        antidotePriceLabel.setForeground(Color.WHITE);
+        buyAntidoteButton.setForeground(Color.WHITE);
+
+        backHomeButton.setForeground(Color.WHITE);
+
+
+        // 创建一个带有自定义边框和标题颜色的边框
+Border border = BorderFactory.createLineBorder(Color.white); // 边框颜色为红色
+TitledBorder titledBorder = BorderFactory.createTitledBorder(border, "AntiDote"); // 标题为 "AntiDote"
+titledBorder.setTitleColor(Color.white); // 标题颜色为蓝色
+// 设置标题字体（字体名称，样式，大小）
+titledBorder.setTitleFont(new Font("Lucida Grande", Font.PLAIN, 30));
+
+
+// 将带有自定义边框和标题颜色的边框设置给 buyAntidotePanel
+buyAntidotePanel.setBorder(titledBorder);
+        // 设置背景颜色
+        moneyPanel.setBackground(Color.BLACK);
+        antidoteAndOrderPanel.setBackground(Color.BLACK);
+        buyAntidotePanel.setBackground(Color.BLACK);
+        orderListPanel.setBackground(Color.BLACK);
+        backHomeButtonPanel.setBackground(Color.BLACK); 
+        buyAntidoteButtonPanel.setBackground(Color.BLACK);
+        antidoteLabelPanel.setBackground(Color.BLACK);
+        //设置antidoteLabelPanel的布局
+        antidoteLabelPanel.setLayout(new BoxLayout(antidoteLabelPanel, BoxLayout.Y_AXIS));
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        antidoteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+   
+
+
+    
+      
+       
 
     }
-
-    // public void buyAntidote() {
-    // if (store.buyWater()) {
-    // JOptionPane.showMessageDialog(null, "You have bought 1 Antidote.");
-    // Component[] components = storePanel.getComponents(); // 获取 storePanel 中的所有组件
-    // if (components.length >= 2 && components[1] instanceof JPanel) { //
-    // 检查组件数量和第二个组件是否是 JPanel
-    // JPanel buyAntidotePanel = (JPanel) components[1]; // 获取 buyAntidotePanel
-    // buyAntidotePanel.removeAll(); // 移除所有组件
-    // JLabel soldLabel = new JLabel("SOLD"); // 创建一个 "SOLD" 标签
-    // buyAntidotePanel.add(soldLabel); // 添加 "SOLD" 标签到 buyAntidotePanel
-    // storePanel.revalidate(); // 重新验证 storePanel
-    // storePanel.repaint(); // 重绘 storePanel
-    // }
-    // } else {
-    // JOptionPane.showMessageDialog(null, "Not enough money to buy Antidote.");
-    // }
-    // }
+    
+    
+   
     public void buyAntidote() {
         if (store.buyWater()) { // 假设buyWater方法检查是否有足够的钱购买解药，并返回一个布尔值
             JOptionPane.showMessageDialog(null, "You have bought 1 Antidote.");
@@ -684,6 +1077,11 @@ public class UI extends JFrame {
                 // 创建一个 "SOLD" 标签并添加到 buyAntidotePanel
                 JLabel soldLabel = new JLabel("SOLD", SwingConstants.CENTER);
                 buyAntidotePanel.add(soldLabel);
+
+                //设置字体
+                soldLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+                //设置颜色
+                soldLabel.setForeground(Color.WHITE);
 
                 // 重新验证和重绘涉及的面板以更新 UI
                 buyAntidotePanel.revalidate();
@@ -737,59 +1135,188 @@ public class UI extends JFrame {
     }
 
     public void createFailurePanel() {
-        failPanel = new BackgroundPanel("arc/main/resources/images/fail.png");
-        failPanel.setLayout(new GridBagLayout());
+        failPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER; // 该组件是行中的最后一个
-        gbc.fill = GridBagConstraints.HORIZONTAL; // 水平扩展组件
-        gbc.anchor = GridBagConstraints.CENTER; // 位置居中
+        gbc.gridwidth = GridBagConstraints.REMAINDER; // 每个组件独占一行
+        gbc.anchor = GridBagConstraints.CENTER; // 居中对齐
+        gbc.insets = new Insets(10, 0, 10, 0); // 设置组件之间的间距
 
-        JTextArea failText = new JTextArea(
-                "Unfortunately, failing to drink the antidote in time, you've transformed into a magical creature and become lost in the forest.");
-        failText.setLineWrap(true);
-        // 设置文本区域在单词边界处换行
-        failText.setWrapStyleWord(true);
-        failText.setPreferredSize(new Dimension(400, 100));
-        // 使 JTextArea 不可编辑，只用作显示文本
-        failText.setEditable(false);
-        failPanel.add(failText, gbc);
+        // 第一行
+        JLabel label = new JLabel("Game Over");
+        gbc.weighty = 0.2;
+        failPanel.add(label, gbc);
 
-        // 创建一个面板用于包含重新开始按钮，使其垂直居中
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        // 创建重新开始按钮
-        JButton restartButton = new JButton("Restart");
-        // 添加重新开始按钮到面板
-        buttonPanel.add(restartButton);
-        // 将面板添加到失败面板
-        failPanel.add(buttonPanel, gbc);
+        // 第二行
+        JTextArea textArea = new JTextArea(4, 10);
+        textArea.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        gbc.weighty = 0.4;
+        failPanel.add(textArea, gbc);
 
-        // 添加重新开始按钮的监听器
-        restartButton.addActionListener(e -> {
-            // 显示主面板
-            showMainScreen();
-        });
-    }
+        // 第三行，创建 teamPanel 并正确设置布局
+        JPanel teamPanel = new JPanel();
+        teamPanel.setLayout(new BoxLayout(teamPanel, BoxLayout.Y_AXIS));
+        JLabel line0 = new JLabel("Team Members:", SwingConstants.CENTER);
+        JLabel line1 = new JLabel("Rui Luo", SwingConstants.CENTER);
+        JLabel line2 = new JLabel("Jiahui Hu", SwingConstants.CENTER);
+        JLabel line3 = new JLabel("Yutong Tang", SwingConstants.CENTER);
 
+        // 将标签添加到 teamPanel
+        teamPanel.add(line0);
+        teamPanel.add(line1);
+        teamPanel.add(line2);
+        teamPanel.add(line3);
+
+        // 使 JLabel 在其容器中居中对齐
+        line0.setAlignmentX(Component.CENTER_ALIGNMENT);
+        line1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        line2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        line3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // 将 teamPanel 添加到 panel
+        gbc.weighty = 0.3;
+        failPanel.add(teamPanel, gbc);
+
+        // 第四行
+        JButton button = createTransparentButton("Back Main");
+        gbc.weighty = 0.1;
+        failPanel.add(button, gbc);
+
+    // 添加重新开始按钮的监听器
+    button.addActionListener(e -> {
+        // 显示主面板
+        showMainScreen();
+    });
+
+    //设置textArea
+    textArea.setText(
+            "Unfortunately, failing to drink the antidote in time, you've transformed into a magical creature and become lost in the forest.");
+    textArea.setLineWrap(true);
+    // 设置文本区域在单词边界处换行
+    textArea.setWrapStyleWord(true);
+    textArea.setPreferredSize(new Dimension(400, 100));
+    // 使 JTextArea 不可编辑，只用作显示文本
+    textArea.setEditable(false);
+
+    // 设置字体
+    label.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+    textArea.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+    line0.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+    line1.setFont(new Font("Lucida Grande", Font.PLAIN, 18));    
+    line2.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+    line3.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+
+    // 设置字体颜色
+    label.setForeground(Color.RED);
+    textArea.setForeground(Color.RED);
+    line0.setForeground(Color.white);
+    line1.setForeground(Color.white);
+    line2.setForeground(Color.white);
+    line3.setForeground(Color.white);
+
+    // 设置背景颜色
+    failPanel.setBackground(Color.BLACK);
+    textArea.setBackground(Color.BLACK);
+    teamPanel.setBackground(Color.BLACK);
+    
+
+
+    
+
+
+    
+}
     public void createSuccessPanel() {
-        successPanel = new BackgroundPanel("arc/main/resources/images/success.png");
+        
 
-        successPanel.setLayout(new GridBagLayout());
-
+        
+        successPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER; // 该组件是行中的最后一个
-        gbc.fill = GridBagConstraints.HORIZONTAL; // 水平扩展组件
-        gbc.anchor = GridBagConstraints.CENTER; // 位置居中
+        gbc.gridwidth = GridBagConstraints.REMAINDER; // 每个组件独占一行
+        gbc.anchor = GridBagConstraints.CENTER; // 居中对齐
+        gbc.insets = new Insets(10, 0, 10, 0); // 设置组件之间的间距
 
-        JTextArea successText = new JTextArea(
-                "Congratulations! After surviving seven days, you successfully waited for the passage to the outside world to reopen. You left the perilous forest and rejoined your companions.");
-        successText.setLineWrap(true);
-        // 设置文本区域在单词边界处换行
-        successText.setWrapStyleWord(true);
-        successText.setPreferredSize(new Dimension(400, 100));
-        // 使 JTextArea 不可编辑，只用作显示文本
-        successText.setEditable(false);
+        // 第一行
+        JLabel label = new JLabel("YOU WIN!");
+        gbc.weighty = 0.2;
+        successPanel.add(label, gbc);
 
-        successPanel.add(successText);
+        // 第二行
+        JTextArea textArea = new JTextArea(4, 10);
+        textArea.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        gbc.weighty = 0.4;
+        successPanel.add(textArea, gbc);
+
+        // 第三行，创建 teamPanel 并正确设置布局
+        JPanel teamPanel = new JPanel();
+        teamPanel.setLayout(new BoxLayout(teamPanel, BoxLayout.Y_AXIS));
+        JLabel line0 = new JLabel("Team Members:", SwingConstants.CENTER);
+        JLabel line1 = new JLabel("Rui Luo", SwingConstants.CENTER);
+        JLabel line2 = new JLabel("Jiahui Hu", SwingConstants.CENTER);
+        JLabel line3 = new JLabel("Yutong Tang", SwingConstants.CENTER);
+
+        // 将标签添加到 teamPanel
+        teamPanel.add(line0);
+        teamPanel.add(line1);
+        teamPanel.add(line2);
+        teamPanel.add(line3);
+
+        // 使 JLabel 在其容器中居中对齐
+        line0.setAlignmentX(Component.CENTER_ALIGNMENT);
+        line1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        line2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        line3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // 将 teamPanel 添加到 panel
+        gbc.weighty = 0.3;
+        successPanel.add(teamPanel, gbc);
+
+        // 第四行
+        JButton button = createTransparentButton("Back Main");
+        gbc.weighty = 0.1;
+        successPanel.add(button, gbc);
+
+    // 添加重新开始按钮的监听器
+    button.addActionListener(e -> {
+        // 显示主面板
+        showMainScreen();
+    });
+
+    
+    textArea.setText(
+        "Congratulations! After surviving seven days, you successfully waited for the passage to the outside world to reopen. You left the perilous forest and rejoined your companions.");
+    textArea.setLineWrap(true);
+    // 设置文本区域在单词边界处换行
+    textArea.setWrapStyleWord(true);
+    textArea.setPreferredSize(new Dimension(400, 100));
+    // 使 JTextArea 不可编辑，只用作显示文本
+    textArea.setEditable(false);
+
+    // 设置字体
+    label.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+    textArea.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+    line0.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+    line1.setFont(new Font("Lucida Grande", Font.PLAIN, 18));    
+    line2.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+    line3.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+
+    // 设置字体颜色
+    label.setForeground(new Color(231, 219, 117));
+    textArea.setForeground(new Color(231, 219, 117));
+    line0.setForeground(Color.white);
+    line1.setForeground(Color.white);
+    line2.setForeground(Color.white);
+    line3.setForeground(Color.white);
+
+    // 设置背景颜色
+    successPanel.setBackground(Color.BLACK);
+    textArea.setBackground(Color.BLACK);
+    teamPanel.setBackground(Color.BLACK);
+    
+
+
+    
+
+
 
     }
 
@@ -893,6 +1420,26 @@ public class UI extends JFrame {
             // 提示加载失败
             JOptionPane.showMessageDialog(null, "Failed to load game.");
         }
+    }
+
+    private static JButton createTransparentButton(String text) {
+        JButton button = new JButton(text);
+
+        // 设置按钮的字体
+        button.setFont(new Font("Lucida Grande", Font.PLAIN, 20)); // 示例字体
+
+        // 设置按钮文字颜色
+        button.setForeground(Color.WHITE); // 示例颜色
+
+        button.setBackground(new Color(38,74,60)); // 示例颜色
+    // 使按钮完全不透明以显示背景色
+    button.setOpaque(true);
+    // 在某些LookAndFeel中，设置setContentAreaFilled(true)是必要的，以确保背景色填充
+    button.setContentAreaFilled(true);
+    // 移除按钮边框
+    button.setBorderPainted(false);
+
+        return button;
     }
 
 }
