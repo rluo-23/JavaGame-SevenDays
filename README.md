@@ -23,7 +23,7 @@ To get the source code of the game and run it:
 
 ## Gameplay Instructions
 
-- Players start with initial skills and a backpack with a capacity of six.
+- Players start with initial skills with level 1 and a backpack with a capacity of 6.
 - Skills include hunting and gathering, affecting success rates of related events.
 - Backpack capacity limits the maximum number of items a player can carry.
 - To survive, players must drink one antidote daily, which can be bought from the store or obtained through special events. Failure to do so will result in game over.
