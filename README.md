@@ -37,5 +37,5 @@ To get the source code of the game and run it:
 
 ## Future Plans and Improvements
 
-- Plans to introduce more exploration events and obtainable materials (items).
+- Plans to introduce more exploration events and obtainable materials.
 - Optimization of the game's interface design for enhanced aesthetics.
