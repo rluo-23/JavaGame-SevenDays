@@ -74,13 +74,6 @@ public class UI extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.NORTH;
 
-        /* mainPanel.add(titlePanel);
-        JLabel gameNameLable = new JLabel("SEVENDAYS");
-        gameNameLable.setFont(new Font("Times New Roman", Font.PLAIN, 108));
-
-        titlePanel.add(gameNameLable);
-        mainPanel.add(titlePanel, gbc); */
-
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.CENTER;
 
@@ -240,7 +233,8 @@ public class UI extends JFrame {
             if (num > 0) {
                 player.getWater().setQuantity(num - 1);
                 System.out.println("Next day");
-                JOptionPane.showMessageDialog(null, "As night falls, you consume a vial of potent antidotes to sustain your life.");
+                JOptionPane.showMessageDialog(null,
+                        "As night falls, you consume a vial of potent antidotes to sustain your life.");
                 store.refreshOrder();
                 return true; // 返回 true 表示存活
             } else {
@@ -251,89 +245,6 @@ public class UI extends JFrame {
         }
         return true; // 如果不是存活检查的时间点，返回 true
     }
-
-    // public void createMyselfPanel() {
-    // myselfPanel = new JPanel();
-
-    // JLabel moneyLabel = new JLabel("Money" + player.getMoney());
-
-    // JLabel skillListLabel = new JLabel("Skill List");
-    // JPanel skillListPanel = createSkillListPanel();
-
-    // JPanel bagpackPanel = new JPanel();
-    // JLabel bagpackLabel = new JLabel("Bagpack");
-    // JLabel antidoteLabel = new JLabel("Antidote " +
-    // player.getWater().getQuantity());
-    // JPanel bagItemListPanel = createBagItemListPanel();
-
-    // bagpackPanel.add(bagpackLabel);
-    // bagpackPanel.add(antidoteLabel);
-    // bagpackPanel.add(bagItemListPanel);
-
-    // JButton backHomeButton = new JButton("Back Home");
-
-    // myselfPanel.add(moneyLabel);
-    // myselfPanel.add(skillListLabel);
-    // myselfPanel.add(skillListPanel);
-    // myselfPanel.add(bagpackPanel);
-    // myselfPanel.add(backHomeButton);
-
-    // backHomeButton.addActionListener(e -> {
-    // createHomePanel();
-    // showPanel(homePanel);
-    // });
-
-    // }
-
-    // public JPanel createSkillListPanel() {
-    // JPanel skillListPanel = new JPanel(new GridLayout(0, 2));
-
-    // JLabel huntingLabel = new JLabel("Hunting" +
-    // player.getSkill().getHuntSkill());
-    // JLabel GatheringLabel = new JLabel("Gathering" +
-    // player.getSkill().getCollectSkill());
-    // JLabel backpackCapacityLabel = new JLabel("BackPack" +
-    // player.getSkill().getCapacity());
-    // JButton upgradeHuntingButton = new JButton("Upgrade");
-    // JButton upgradeGatheringButton = new JButton("Upgrade");
-    // JButton upgradeBackpackButton = new JButton("Upgrade");
-
-    // skillListPanel.add(huntingLabel);
-    // skillListPanel.add(upgradeHuntingButton);
-    // skillListPanel.add(GatheringLabel);
-    // skillListPanel.add(upgradeGatheringButton);
-    // skillListPanel.add(backpackCapacityLabel);
-    // skillListPanel.add(upgradeBackpackButton);
-
-    // upgradeBackpackButton.addActionListener(e -> {
-    // upgrade(0);
-    // });
-    // upgradeGatheringButton.addActionListener(e -> {
-    // upgrade(1);
-    // });
-    // upgradeHuntingButton.addActionListener(e -> {
-    // upgrade(2);
-    // });
-
-    // return skillListPanel;
-
-    // }
-    // public JPanel createBagItemListPanel() {
-    // JPanel bagItemListPanel = new JPanel();
-
-    // bagItemListPanel.setLayout(new GridLayout(0, 2));
-
-    // for (int i = 0; i < player.getItems().getBagList().size(); i++) {
-    // JLabel bagItemLabel = new
-    // JLabel(player.getItems().getBagList().get(i).getItem().getName());
-    // JLabel bagItemQuantityLabel = new
-    // JLabel(player.getItems().getBagList().get(i).getQuantity() + "");
-    // bagItemListPanel.add(bagItemLabel);
-    // bagItemListPanel.add(bagItemQuantityLabel);
-    // }
-
-    // return bagItemListPanel;
-    // }
 
     public void createMyselfPanel() {
         myselfPanel = new JPanel(new BorderLayout());
@@ -509,9 +420,7 @@ public class UI extends JFrame {
         JButton exporeButton = new JButton("Expore");
 
         int RemainingCapacity = player.getSkill().getCapacity() - player.getItems().calTotalQuantity();
-        if (RemainingCapacity < 0) {
-            RemainingCapacity = 0;
-        }
+
         JLabel backpackLabel = new JLabel("Remaining Capacity: " + RemainingCapacity);
         JPanel backpackPanel = new JPanel();
         backpackPanel.add(backpackLabel);
