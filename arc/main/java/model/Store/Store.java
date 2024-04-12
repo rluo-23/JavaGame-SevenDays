@@ -41,7 +41,6 @@ public class Store {
             int quantity = random.nextInt(2) + 1;
             newOrder(item, quantity);
         }
-        System.out.println("Orders have been refreshed.");
     }
 
     public Boolean buyWater() {

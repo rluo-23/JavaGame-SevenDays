@@ -15,7 +15,7 @@ public class Event {
     public Event(Item item, String information) {
         this.item = item;
         this.quantity = random.nextInt(2) + 1;
-        this.difficulty = item.getPrice() * quantity / 5;
+        this.difficulty = item.getPrice() * quantity / 3;
         this.information = information;
     }
 
