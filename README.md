@@ -32,7 +32,7 @@ To get the source code of the game and run it:
 
 ## Notices and Known Issues
 
-- All images used in the game are created by AI and are not intended for commercial use.
+- Images are sourced from the internet and used under copyright permission.
 
 ## Future Plans and Improvements
 
