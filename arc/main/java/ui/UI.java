@@ -999,7 +999,7 @@ public class UI extends JFrame {
 
         JPanel teamPanel = new JPanel();
         teamPanel.setLayout(new BoxLayout(teamPanel, BoxLayout.Y_AXIS));
-        JLabel line0 = new JLabel("Team Members:", SwingConstants.CENTER);
+        JLabel line0 = new JLabel("Game Development Team:", SwingConstants.CENTER);
         JLabel line1 = new JLabel("Rui Luo", SwingConstants.CENTER);
         JLabel line2 = new JLabel("Jiahui Hu", SwingConstants.CENTER);
         JLabel line3 = new JLabel("Yutong Tang", SwingConstants.CENTER);
@@ -1073,7 +1073,7 @@ public class UI extends JFrame {
 
         JPanel teamPanel = new JPanel();
         teamPanel.setLayout(new BoxLayout(teamPanel, BoxLayout.Y_AXIS));
-        JLabel line0 = new JLabel("Team Members:", SwingConstants.CENTER);
+        JLabel line0 = new JLabel("Game Development Team:", SwingConstants.CENTER);
         JLabel line1 = new JLabel("Rui Luo", SwingConstants.CENTER);
         JLabel line2 = new JLabel("Jiahui Hu", SwingConstants.CENTER);
         JLabel line3 = new JLabel("Yutong Tang", SwingConstants.CENTER);
@@ -1104,7 +1104,7 @@ public class UI extends JFrame {
         textArea.setLineWrap(true);
 
         textArea.setWrapStyleWord(true);
-        textArea.setPreferredSize(new Dimension(400, 100));
+        textArea.setPreferredSize(new Dimension(400, 130));
 
         textArea.setEditable(false);
 
@@ -1134,13 +1134,11 @@ public class UI extends JFrame {
     }
 
     private void showPanel(JPanel panel) {
-        // 移除当前面板
         if (currentPanel != null) {
             remove(currentPanel);
         }
-        // 添加新的面板并重新绘制
         add(panel);
-        currentPanel = panel; // 更新当前面板的引用
+        currentPanel = panel;
         revalidate();
         repaint();
     }
