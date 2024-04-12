@@ -222,7 +222,6 @@ public class UI extends JFrame {
 
         saveGameButton.addActionListener(e -> {
             saveGame();
-            JOptionPane.showMessageDialog(null, "Game saved.");
         });
 
         goMyselfButton.addActionListener(e -> {
@@ -466,7 +465,26 @@ public class UI extends JFrame {
 
         }
         refreshSkillListPanel();
+        refreshMyselfMoney();
 
+    }
+
+    public void refreshMyselfMoney() {
+        // 获取第一个组件（假设是包含 moneyLabel 的 JPanel）
+        Component[] components = myselfPanel.getComponents();
+        if (components.length > 0 && components[0] instanceof JPanel) {
+            JPanel moneyPanel = (JPanel) components[0];
+
+            // 在 moneyPanel 中找到 moneyLabel 并更新其文本
+            Component[] subComponents = moneyPanel.getComponents();
+            for (Component subComponent : subComponents) {
+                if (subComponent instanceof JLabel && ((JLabel) subComponent).getText().startsWith("Money")) {
+                    JLabel moneyLabel = (JLabel) subComponent;
+                    moneyLabel.setText("Money: " + player.getMoney());
+                    break; // 找到并更新后立即退出循环
+                }
+            }
+        }
     }
 
     public void refreshSkillListPanel() {
@@ -497,10 +515,8 @@ public class UI extends JFrame {
     }
 
     public void createForestPanel() {
-        player.addTime();
-
         forestPanel = new BackgroundPanel("arc/main/resources/images/forestpage.JPG");
-        
+
         JLabel forestlabel = new JLabel("Forest");
 
         JButton exporeButton = new JButton("Expore");
@@ -523,7 +539,8 @@ public class UI extends JFrame {
         exporeButton.addActionListener(e -> {
             if (player.getItems().calTotalQuantity() < player.getSkill().getCapacity()) {
                 exploreEvent();
-                showForestPanel();
+                createForestPanel();
+                showPanel(forestPanel);
             } else {
                 JOptionPane.showMessageDialog(null, "Your backpack is full! You can't explore anymore.");
             }
@@ -636,11 +653,29 @@ public class UI extends JFrame {
                     antidoteAndOrderPanel.repaint();
                 }
             }
-        }
 
+        }
         // 注意：如果 storePanel 是重新布局或重绘的对象，则需要在这里调用
         storePanel.revalidate();
         storePanel.repaint();
+    }
+
+    public void refreshStoreMoney() {
+        // 获取商店面板的第一个组件（假设是包含 moneyLabel 的 JPanel）
+        Component[] components = storePanel.getComponents();
+        if (components.length > 0 && components[0] instanceof JPanel) {
+            JPanel moneyPanel = (JPanel) components[0];
+
+            // 在 moneyPanel 中找到 moneyLabel 并更新其文本
+            Component[] subComponents = moneyPanel.getComponents();
+            for (Component subComponent : subComponents) {
+                if (subComponent instanceof JLabel && ((JLabel) subComponent).getText().startsWith("Money")) {
+                    JLabel moneyLabel = (JLabel) subComponent;
+                    moneyLabel.setText("Money: " + player.getMoney());
+                    break; // 找到并更新后立即退出循环
+                }
+            }
+        }
     }
 
     public JPanel createOrderPanel(int i) {
@@ -673,6 +708,7 @@ public class UI extends JFrame {
                     // store.submitOrder(order);
                     JOptionPane.showMessageDialog(null, "Order submitted.");
                     refreshOrderListPanel();
+                    refreshStoreMoney();
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "Not enough " + store.getOrders().get(i).getItem().getName() + " to submit order.");
@@ -756,6 +792,8 @@ public class UI extends JFrame {
                 // 重新验证和重绘涉及的面板以更新 UI
                 buyAntidotePanel.revalidate();
                 buyAntidotePanel.repaint();
+
+                refreshStoreMoney();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Not enough money to buy Antidote.");
@@ -787,6 +825,7 @@ public class UI extends JFrame {
     }
 
     public void showForestPanel() {
+        player.addTime();
         createForestPanel();
         showPanel(forestPanel);
     }
@@ -795,8 +834,6 @@ public class UI extends JFrame {
         createStorePanel();
         showPanel(storePanel);
     }
-
-    
 
     public void showSuccessPanel() {
         createSuccessPanel();
@@ -810,10 +847,6 @@ public class UI extends JFrame {
         gbc.gridwidth = GridBagConstraints.REMAINDER; // 该组件是行中的最后一个
         gbc.fill = GridBagConstraints.HORIZONTAL; // 水平扩展组件
         gbc.anchor = GridBagConstraints.CENTER; // 位置居中
-     
-
-     
-        
 
         JTextArea failText = new JTextArea(
                 "Unfortunately, failing to drink the antidote in time, you've transformed into a magical creature and become lost in the forest.");
@@ -823,49 +856,46 @@ public class UI extends JFrame {
         failText.setPreferredSize(new Dimension(400, 100));
         // 使 JTextArea 不可编辑，只用作显示文本
         failText.setEditable(false);
-        failPanel.add(failText);
+        failPanel.add(failText, gbc);
+
+        // 创建一个面板用于包含重新开始按钮，使其垂直居中
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        // 创建重新开始按钮
+        JButton restartButton = new JButton("Restart");
+        // 添加重新开始按钮到面板
+        buttonPanel.add(restartButton);
+        // 将面板添加到失败面板
+        failPanel.add(buttonPanel, gbc);
+
+        // 添加重新开始按钮的监听器
+        restartButton.addActionListener(e -> {
+            // 显示主面板
+            showMainScreen();
+        });
     }
+
     public void createSuccessPanel() {
         successPanel = new BackgroundPanel("arc/main/resources/images/success.png");
- 
- 
-       
-       
-       
+
         successPanel.setLayout(new GridBagLayout());
-       
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER; // 该组件是行中的最后一个
         gbc.fill = GridBagConstraints.HORIZONTAL; // 水平扩展组件
         gbc.anchor = GridBagConstraints.CENTER; // 位置居中
- 
- 
-       
-    
- 
- 
-    
-       
- 
- 
-        JTextArea successText =new JTextArea("Congratulations! After surviving for seven days, you've successfully awaited your companions' rescue.");
+
+        JTextArea successText = new JTextArea(
+                "Congratulations! After surviving seven days, you successfully waited for the passage to the outside world to reopen. You left the perilous forest and rejoined your companions.");
         successText.setLineWrap(true);
         // 设置文本区域在单词边界处换行
         successText.setWrapStyleWord(true);
         successText.setPreferredSize(new Dimension(400, 100));
         // 使 JTextArea 不可编辑，只用作显示文本
         successText.setEditable(false);
- 
- 
+
         successPanel.add(successText);
-      
- 
- 
- 
- 
+
     }
- 
- 
 
     public void showFailurePanel() {
         createFailurePanel();
