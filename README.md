@@ -1,6 +1,6 @@
 # Seven Days
 
-Seven Days is a text-based survival adventure game where you must survive for seven days in a dangerous enchanted forest to achieve success.
+Seven Days is a text-based survival adventure game with  Graphical User Interface （GUI) where you must survive for seven days in a dangerous enchanted forest to achieve success.
 
 ## Features and Functionality
 
